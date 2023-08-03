@@ -1,0 +1,342 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Assistant,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+}
+.main{
+    width:100%;
+    position: relative;
+}
+#navbar {
+    width: 100%;
+    height: 80px;
+    /* border: 2px solid red; */
+    display: flex;
+    justify-content: space-around;
+    box-sizing: border-box;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    box-shadow: 0 4px 12px 0 rgba(0,0,0,.05);
+}
+
+#icon {
+    width: 5%;
+    /* border:1px solid blue; */
+    box-sizing: border-box;
+}
+#icon img{
+width:105px;
+height:60px;
+margin-top: 15px;
+}
+
+#navi {
+    width: 35%;
+    /* border:1px solid blue; */
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 700;
+    position: relative;
+}
+#navi div a{
+    text-decoration: none;
+    color:black;
+}
+.text{
+    position: absolute;
+    top: 28px;
+    right: 3px;
+    font-size: 10px;
+    font-weight: 645;
+    color: #ff3f6c;
+}
+#search {
+    width: 30%;
+    display: flex;
+    align-items: center;
+    
+    position: relative;
+}
+
+#search input {
+    height:45%;
+    width:100%;
+    padding-left: 43px;
+    border:none;
+    outline: none;
+    border-radius: 5px;
+    background-color: rgb(243, 239, 239);
+    
+}
+
+#search i{
+    margin-right: 10px;
+    position: absolute;
+    top:33px;
+    left:12px;
+}
+
+#profile {
+    width: 15%;
+    height: 80px;
+    /* border:1px solid blue; */
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+
+}
+
+#pp {
+    width: 30%;
+    height: 80px;
+    /* border:1px solid red; */
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+
+#pp i {
+    margin-top: 20px;
+    margin-left: 28px;
+    margin-right: 20px;
+    
+}
+
+#wishlist {
+    width: 30%;
+    height: 80px;
+    /* border:1px solid red; */
+    margin-top: 10px;
+    
+}
+
+#wishlist i {
+    margin-top: 20px;
+    margin-left: 28px;
+    margin-right: 20px;
+}
+
+
+
+
+#bag {
+    width: 30%;
+    height: 80px;
+    /* border:1px solid red; */
+    margin-top: 10px;
+}
+
+#bag i {
+    margin-top: 20px;
+    margin-left: 25px;
+    margin-right: 20px;
+}
+
+
+.login{
+    width:17%;
+    padding:15px 15px;
+    position: absolute;
+    top: 80px;
+    left: 76%;
+    background-color: white;
+    display: none;   
+}
+#pp:hover {
+    .login{
+       display: block;
+    }
+}
+.login h3{
+    margin-bottom: 2px;
+}
+.login p{
+    font-size: 14px;
+    color:rgb(41, 41, 41);
+    margin-bottom: 10px;
+}
+.login button{
+    width:60%;
+    height:35px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    background-color: white;
+    border:1px solid rgb(187, 185, 185);
+    color:#ff3f6c;
+    font-weight: bold;
+    border-radius: 3px;
+}
+.login button:hover{
+ border: 1px solid #ff3f6c;  
+}
+.login div{
+    border-bottom: 1px solid rgb(210, 207, 207);
+    margin-bottom: 10px;
+}
+.login ul{
+    list-style: none;
+    line-height: 27px;
+    font-size: 14px;
+    color:rgb(41, 41, 41);
+}
+.login ul:nth-child(2){
+    border-bottom: 1px solid rgb(210, 207, 207);
+    padding-bottom: 5px; 
+    margin-bottom: 10px;  
+}
+
+
+
+.body .image1{
+    width:100%;
+    height:399px;
+    /* margin-top:50px; */
+}
+.body .image1 img{
+    width:100%;
+    height:100%;
+}
+.section1 h3{
+    font-size: 1.7rem;
+    font-weight: bold;
+    letter-spacing: 5px;
+    margin: 50px 0 40px 30px;
+}
+.section1-images{
+    display: flex;
+    flex-wrap: wrap;
+}
+.section1-images img{
+    width:12.5%;
+    height:286px;
+}
+.section2 h3{
+    font-size: 1.7rem;
+    font-weight: bold;
+    letter-spacing: 5px;
+    margin: 50px 0 40px 30px;
+}
+.section2-images{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+ }
+.section2-images img{
+    width:14%;
+    height:266px;
+}
+.section3 h3{
+    font-size: 1.7rem;
+    font-weight: bold;
+    letter-spacing: 5px;
+    margin: 50px 0 40px 30px;
+}
+.section3-images img{
+    width:12.5%;
+    height:236px;
+}
+.section3-images{
+   display: flex;
+   flex-wrap: wrap;
+}
+.section4 h3{
+    font-size: 1.7rem;
+    font-weight: bold;
+    letter-spacing: 5px;
+    margin: 50px 0 40px 30px;
+}
+.section4-images{
+    display: flex;
+    flex-wrap: wrap;
+}
+.section4-images img{
+    width:12.5%;
+    height:309px;
+}
+.section5 h3{
+    font-size: 1.7rem;
+    font-weight: bold;
+    letter-spacing: 5px;
+    margin: 50px 0 40px 30px;
+}
+.section5-images{
+    display: flex;
+    flex-wrap: wrap;
+}
+.section5-images img{
+    width:14.28%;
+    height:253px;
+}
+.section6 h3{
+    font-size: 1.7rem;
+    font-weight: bold;
+    letter-spacing: 5px;
+    margin: 50px 0 40px 30px;
+}
+.section6-images{
+    display: flex;
+    flex-wrap: wrap;
+}
+.section6-images img{
+    width:12.5%;
+    height:233px;
+}
+.section7 h3{
+    font-size: 1.7rem;
+    font-weight: bold;
+    letter-spacing: 5px;
+    margin: 50px 0 40px 30px;
+}
+.section7-images{
+    display: flex;
+    flex-wrap: wrap;
+}
+.section7-images img{
+    width:12.5%;
+    height:249px;
+}
+.section8 h3{
+    font-size: 1.7rem;
+    font-weight: bold;
+    letter-spacing: 5px;
+    margin: 50px 0 40px 30px;
+}
+.section8-images{
+    display: flex;
+    flex-wrap: wrap;
+}
+.section8-images img{
+    width:25%;
+    height:333px;
+}
+.section9 h3{
+    font-size: 1.7rem;
+    font-weight: bold;
+    letter-spacing: 5px;
+    margin: 50px 0 40px 30px;
+}
+.section9-images{
+    display: flex;
+    flex-wrap: wrap;
+}
+.section9-images img{
+    width:14.286%;
+    height:285px;
+}
+.section10 h3{
+    font-size: 1.7rem;
+    font-weight: bold;
+    letter-spacing: 5px;
+    margin: 50px 0 40px 30px;
+}
+.section10-images{
+    display: flex;
+    flex-wrap: wrap;
+}
+.section10-images img{
+    width:25%;
+    height:271px;
+}

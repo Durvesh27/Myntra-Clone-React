@@ -1,0 +1,349 @@
+#body {
+    width: 100%;
+    /* height: 800px; */
+    border: 1px solid #edebef;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+
+#body>div:nth-child(1) {
+    width: 16%;
+    /* border: 1px solid red; */
+
+}
+
+#body>div:nth-child(1) h4 {
+    margin-bottom: 10px;
+
+}
+
+#rightSection {
+    width: 84%;
+    border-left: 1px solid #edebef;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    /* padding-top: 25px;
+    padding-left: 15px; */
+    padding-top: 24px;
+padding-left: 15px;
+padding-right: 20px;
+}
+
+.top1 {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    margin-left: 20px;
+}
+
+.top1 p:nth-child(1) {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.top1 p:nth-child(2) {
+    font-size: 16px;
+}
+
+.top2 {
+    display: flex;
+}
+
+.top2 p {
+    font-size: 16px;
+    font-weight: bold;
+    width: 26%;
+    padding-left: 27px;
+    box-sizing: border-box;
+}
+
+.top2 .drop {
+    width: 74%;
+    display: flex;
+}
+
+.top2 .drop div {
+    font-size: 14px;
+    margin-right: 20px;
+}
+
+.top2 .drop div select {
+    border: none;
+    outline: none;
+
+}
+
+.top2 .drop-option {
+    width: 30%;
+}
+
+.top2 .drop-option select {
+    margin: auto;
+    display: block;
+    width: 60%;
+    height: 35px;
+}
+
+#leftSection {
+    margin-top: 20px;
+}
+
+#leftSection div:nth-child(1) {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    border-bottom: 1px solid #edebef;
+}
+
+#leftSection div:nth-child(2){
+    margin-bottom: 15px;
+    padding-left: 20px;
+    border-bottom: 1px solid #edebef;
+}
+#leftSection div:nth-child(4){
+    padding: 15px 0 15px 20px;
+     border-bottom: 1px solid #edebef;
+}
+#leftSection div:nth-child(5){
+    padding: 15px 0 15px 20px;
+     border-bottom: 1px solid #edebef;
+}
+#leftSection div:nth-child(6){
+    padding: 15px 0 15px 20px;
+     border-bottom: 1px solid #edebef;
+}
+#leftSection .more{
+    font-size: 15px;
+margin: 6px 0 15px 35px;
+color: #ff3f6c;
+}
+
+#leftSection div h4 {
+    margin-bottom: 10px;
+    margin-left: 9px;
+    font-size: 14px;
+}
+#leftSection div input{
+    width:15px;
+    height:15px;
+    margin-right: 7px;
+}
+#leftSection div input,
+label {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+#leftSection div label span{
+    font-size: 11px;
+    color:rgb(137, 136, 136)
+}
+#leftSection>div:nth-child(3){
+    padding-left: 20px;
+    border-bottom: 1px solid #edebef;
+
+}
+#leftSection .colour{
+    display: inline-block;
+    width:15px;
+    height:15px;
+    background-color: blue;
+    border-radius:50%;
+}
+#rightSection .main{
+    width: 17%;
+    height: 358px;
+    position: relative;
+    /* border: 1px solid blue; */
+    z-index: 1;
+    margin-bottom: 30px;
+}
+
+#rightSection .main:hover {
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+#rightSection .main img {
+    width: 100%;
+    height: 78%;
+    /* margin: 26px 12px; */
+}
+
+#rightSection .box {
+    border: 1px solid #eaeaec;
+    background-color: hsla(0, 0%, 100%, .8);
+    color: black;
+    padding: 2px;
+    font-size: 12px;
+    position: absolute;
+    top: 240px;
+    left: 10px;
+    opacity: 0.8;
+    border-radius: 2px;
+}
+
+#rightSection .box>img {
+    height: 10px;
+    width: 12px;
+}
+
+#rightSection .secText {
+    margin-left: 5px;
+}
+
+#rightSection .secText strong {
+    font-size: 14px;
+}
+
+#rightSection .secText span {
+    font-size: 12px;
+    color: grey
+}
+
+#rightSection .secText b {
+    font-size: 12px;
+    color: rgb(255, 204, 110)
+}
+
+#rightSection .newSeason {
+    background: rgba(255, 63, 108, .8);
+    position: absolute;
+    top: 16px;
+    left: 0;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 0 4px;
+    line-height: 16px;
+}
+
+#rightSection .newSeason::after {
+    content: "";
+    position: absolute;
+    border-color: rgba(255, 63, 108, .5) transparent rgba(255, 63, 108, .5) rgba(255, 63, 108, .8);
+    border-style: solid;
+    border-width: 8px;
+    left: 100%;
+    width: 0;
+    height: 0;
+    top: 0;
+}
+
+.container {
+    /* border:1px solid red; */
+    height: 130px;
+    /* position: absolute;
+top: 240px; */
+    width: 100%;
+    /* z-index: 10; */
+    background-color: white;
+    display: none;
+}
+
+#rightSection>div:hover {
+    .container {
+        display: block;
+        position: absolute;
+        top: 230px;
+        /* border: 1px solid red; */
+    }
+
+}
+
+
+
+
+.container button {
+    display: block;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    width: 80%;
+    height: 30px;
+    background: white;
+    border: 1px solid #c7c5c5;
+    border-radius: 2px;
+}
+.container button:hover{
+    border: 1px solid black;
+}
+
+.container p {
+    color: #8a8989;
+    font-size: 14px;
+    margin-left: 10px;
+    margin-top: 15.5px;
+    margin-bottom: 3px;
+}
+
+.container span:nth-child(3) {
+    margin-left: 10px;
+}
+
+#rightSection>div>h4:nth-child(2) {
+    /* margin-bottom: 2px; */
+    margin-left: 5px;
+}
+
+#rightSection>div>p:nth-child(3) {
+    margin-bottom: 3px;
+    font-size: 14px;
+    margin-left: 5px;
+    color: #535766;
+}
+#rightSection .downline{
+width:98%;
+height:1px;
+background-color:#edebef ;
+}
+#rightSection .bottomFlex{
+width: 100%;
+display: flex;
+margin: 50px 0;
+}
+.bottomFlex p{
+    width:33%;
+    font-size: 14px;
+   margin-top: 15px;
+}
+.bottomFlex .nextPage{
+    width:38%;
+    display: flex;
+    align-items: center;
+    list-style: none;
+    
+
+}
+.bottomFlex .nextPage li{
+    padding: 0 10px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+.bottomFlex .nextPage li:nth-child(1){
+    background-color: black;
+    color: white;
+    height: 30px;
+    padding-top:8px;
+    
+}
+.bottomFlex .nextPage li:hover{
+    height: 30px;
+  border:1px solid rgb(158, 156, 156);  
+  padding-top:8px;
+}
+.bottomFlex .lastButton{
+    width:28%;
+    
+}
+.bottomFlex .lastButton button{
+    height: 45px;
+width: 25%;
+border: 1px solid #b9b5b5;
+border-radius: 3px;
+font-weight: bold;
+margin-left: 40px;
+}
+.bottomFlex .lastButton button:hover{
+border:1px solid black;
+}
