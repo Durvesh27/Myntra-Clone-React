@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./../../Categories/MultipleProduct.css";
 import MensData from "./MensProData";
 import star1 from './../../Images/star.png'
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 const MensMultipleProducts = () => {
+const [products,setProducts]=useState([])
+localStorage.setItem("Men-Products",JSON.stringify(MensData))
+
+useEffect(()=>{
+const products=JSON.parse(localStorage.getItem("Men"))
+setProducts(products)
+},[])
+
+// console.log(products)
+
+const router=useNavigate()
   return (
     <div>
       <div className="top1">
@@ -198,9 +211,9 @@ const MensMultipleProducts = () => {
           </div>
         </div>
         <div id="rightSection">
-          {MensData.map((pro) => (
+          {products.map((pro) => (
             <div className="main">
-              <img src={pro?.imgsrc} />
+              <img src={pro?.imgsrc} onClick={()=>router(`/single-product/${pro?.id}`)}/>
               <h4>{pro?.pri}</h4>
               <p>{pro?.category}</p>
               <span className="box">

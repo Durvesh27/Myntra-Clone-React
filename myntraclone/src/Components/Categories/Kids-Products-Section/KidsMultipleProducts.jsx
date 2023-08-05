@@ -1,6 +1,7 @@
 import React from 'react'
 import KidsData from './KidsProData';
 import "./../../Categories/MultipleProduct.css";
+import star1 from './../../Images/star.png'
 const KidsMultipleProducts = () => {
   return (
  <div>
@@ -153,7 +154,7 @@ const KidsMultipleProducts = () => {
         <p>{pro?.category}</p>
         <span className="box">
           <b>{pro?.rating}</b>
-          <img src="./star.png" alt />
+          <img src={star1} alt="" />
           <b>| 141</b>
         </span>
         <span className="secText">

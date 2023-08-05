@@ -1,20 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Index.css'
 import logo from '../Images/myntraLOGO.webp'
 import { useNavigate } from 'react-router-dom'
+import { useContext } from 'react'
+import { AuthContext } from '../../Context'
+import { useEffect } from 'react'
 const Navbar = () => {
 const router=useNavigate()
+const[logged,setLogged]=useState(false)
+const {state,login,logout}=useContext(AuthContext)
+
+useEffect(()=>{
+if(state?.user){
+setLogged(true)
+}else{
+setLogged(false)
+}
+},[state])
+
+
   return (
 <div id="navbar">
   <div id="icon">
-    <img src={logo} alt="err"/>
+    <img src={logo} alt="err" onClick={()=>router('/')}/>
   </div>
   <div id="navi">
     <div onClick={()=>router('/mens-multiple-products')}>Men</div>
     <div onClick={()=>router('/womens-multiple-products')}>Women</div>
     <div onClick={()=>router('/kids-multiple-products')}>Kids</div>
-    <div><a href="Myntra page2D.html">Home &amp; Living</a></div>
-    <div><a href="Myntra page2E.html">Beauty</a></div>
+    <div onClick={()=>router('/home-multiple-products')}> Living</div>
+    <div onClick={()=>router('/beauty-multiple-products')}>Beauty</div>
     <div>Studio</div>
     <span className="text">NEW</span>
   </div>
@@ -30,11 +45,13 @@ const router=useNavigate()
         <div>
           <h3>Welcome</h3>
           <p> To access account and manage orders</p>
-          <a href="Mynta page3A.html">
-            <button>
+          {
+            logged && <p>Hello!  <span style={{color:"green",fontWeight:600}}>&nbsp;{state?.user?.name}&nbsp;<span style={{color:"red"}}>({state?.user?.role})</span></span></p>
+          }
+         
+            <button onClick={()=>router('/login')}>
               LOGIN / SIGN UP
             </button>
-          </a>
         </div>
         <ul>
           <li>Orders</li>
@@ -50,18 +67,33 @@ const router=useNavigate()
           <li>Saved VPA</li>
           <li>Saved Address</li>
         </ul>
+        <button onClick={logout}>LOGOUT</button>
       </div>
+   
     </div>
+    {
+      logged &&
+    <>
+    {
+      state?.user?.role==="Buyer"?
+    
+    <>
     <div id="wishlist">
-      <a href="Myntra page6.html">
-        <i style={{color: 'black'}} className="fa-solid fa-cart-shopping " /></a>
-      <div style={{marginTop: 3, marginLeft: 20}}>Wishlist</div>
+        <i style={{color: 'black'}} className="fa-solid fa-cart-shopping " onClick={()=>router('/wishlist')}/>
+      <div style={{marginTop: "3px", marginLeft: "20px"}}>Wishlist</div>
     </div>
     <div id="bag">
-      <a href="Myntra page4.html">
-        <i style={{color: 'black'}} className="fa-solid fa-bag-shopping" /></a>
-      <div style={{marginTop: 3, marginLeft: 20}}>Bag</div>
+        <i style={{color: 'black'}} className="fa-solid fa-bag-shopping" onClick={()=>router('/cart')}  />
+      <div style={{marginTop: "3px", marginLeft: "20px"}}>Bag</div>
     </div>
+    </>:
+    <div id="add" onClick={()=>router('/add-product')}>
+       <i class="fa-solid fa-plus fa-xl plus-i" style={{color: 'black'}}></i>
+      <div style={{marginTop: "3px", marginLeft: "20px"}}>Add Products</div>
+    </div>
+}
+</>
+}
   </div>
 </div>
 

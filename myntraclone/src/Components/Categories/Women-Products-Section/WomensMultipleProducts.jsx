@@ -1,7 +1,10 @@
 import React from 'react'
 import WomensData from './WomensProData';
 import "./../../Categories/MultipleProduct.css";
+import star1 from './../../Images/star.png'
+import { useNavigate } from 'react-router-dom';
 const WomensMultipleProducts = () => {
+const router=useNavigate();
   return (
 <div>
   <div className="top1">
@@ -132,12 +135,12 @@ const WomensMultipleProducts = () => {
     {
 WomensData.map((WomensData)=>(
       <div className="main">
-        <img src={WomensData?.imgsrc} alt="" />
+        <img src={WomensData?.imgsrc} alt="" onClick={()=>router(`/single-product/${WomensData?.id}`)}/>
         <h4>{WomensData?.pri}</h4>
         <p>{WomensData?.category}</p>
         <span className="box">
           <b>{WomensData?.rating}</b>
-          <img src="./star.png" alt />
+          <img src={star1} alt="" />
           <b>| 14.1k</b>
         </span>
         <span className="secText">
