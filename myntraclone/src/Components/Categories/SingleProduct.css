@@ -176,6 +176,7 @@
     color: white;
     border: none;
     outline: none;
+    margin-right: 15px;
 }
 
 .size>div:nth-child(5)>button:nth-child(2) {

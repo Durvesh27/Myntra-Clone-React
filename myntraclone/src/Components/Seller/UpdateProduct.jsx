@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 const UpdateProduct = ({id,setProData,click,setClick}) => {
   const [storeData, setStoreData] = useState({
@@ -31,7 +32,7 @@ const UpdateProduct = ({id,setProData,click,setClick}) => {
     localStorage.setItem("Men", JSON.stringify(products));
     setProData(storeData);
     setClick(!click)
-    alert("Product Updated");
+    toast.success("Product Updated");
   }
 
 

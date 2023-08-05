@@ -22,7 +22,7 @@
     font-size: 20px;
     margin-bottom: 20px;
 }
-.second input,select{
+.second input{
     width:100%;
     padding-left: 12px;
     box-sizing: border-box;
@@ -31,6 +31,16 @@
     outline: none;
     border: 1px solid rgb(204, 202, 202);
     margin: 10px 0;
+}
+.select-input{
+    width:100%;
+    padding-left: 12px;
+    box-sizing: border-box;
+    height:38px;
+    border:none;
+    outline: none;
+    border: 1px solid rgb(204, 202, 202);
+    margin: 10px 0; 
 }
 .second p:nth-child(6){
     font-size: 13px;

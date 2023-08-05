@@ -8,6 +8,7 @@ import WomensData from "./Women-Products-Section/WomensProData";
 import UpdateProduct from "../Seller/UpdateProduct";
 import { useContext } from "react";
 import { AuthContext } from "../../Context";
+import { toast } from "react-hot-toast";
 const SingleProduct = () => {
   const { userId } = useParams();
   const [proData, setProData] = useState();
@@ -36,10 +37,11 @@ const SingleProduct = () => {
     users.forEach((item) => {
       if (item.email === currentUser.email) {
         item.cart.push(proData);
-        alert("Item Added to cart");
+        toast.success("Item Added to cart");
       }
     });
     localStorage.setItem("Users", JSON.stringify(users));
+    
   }
 
   return (

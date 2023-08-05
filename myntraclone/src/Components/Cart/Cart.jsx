@@ -1,16 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import "./Cart.css";
 import logo from "../Images/myntraLOGO.webp";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
+
 const Cart = () => {
   const [cart, setCart] = useState();
   const [final, setFinal] = useState(0);
+
   const users = JSON.parse(localStorage.getItem("Users"));
   const current = JSON.parse(localStorage.getItem("Current-User"));
 
   useEffect(() => {
     users.forEach((element) => {
-      if (element.email === current.email) {
+      if (element.email === current.email){
         setCart(element.cart);
       }
     });
@@ -35,7 +38,7 @@ const Cart = () => {
         data.cart = updatedItems;
       }
     });
-    alert("Item deleted")
+    toast("Item deleted")
     localStorage.setItem("Users",JSON.stringify(users))
     setCart(updatedItems);
   }
@@ -46,7 +49,7 @@ const Cart = () => {
         data.cart = [];
       }
     });
-    alert("Proceed to Checkout")
+    toast.success("Proceed to Checkout")
     localStorage.setItem("Users",JSON.stringify(users))
     setCart([])
   }

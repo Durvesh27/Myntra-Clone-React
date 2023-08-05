@@ -4,16 +4,18 @@ import MensData from "./MensProData";
 import star1 from './../../Images/star.png'
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-const MensMultipleProducts = () => {
+const MensMultipleProducts = ({proCount,setProCount}) => {
 const [products,setProducts]=useState([])
-localStorage.setItem("Men-Products",JSON.stringify(MensData))
+const[myData,setMyData]=useState(false)
+// localStorage.setItem("Men",JSON.stringify(MensData))
 
 useEffect(()=>{
-const products=JSON.parse(localStorage.getItem("Men"))
-setProducts(products)
-},[])
+const productData=JSON.parse(localStorage.getItem("Men"))
+setProducts(productData)
+},[proCount])
 
-// console.log(products)
+console.log(products,"State products")
+
 
 const router=useNavigate()
   return (

@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
   const [currentUserData, setCurrentUserData] = useState({
@@ -33,13 +34,13 @@ const Login = () => {
         return alert("Invalid credentials");
       } else {
         // localStorage.setItem("Current-User", JSON.stringify(currentUserData));
-        alert("Logged in successfully");
+        toast.success("Logged in successfully");
         router("/");
         setCurrentUserData({ email: "", password: "" });
       }
       
     } else {
-      alert("Please fill all the fields");
+      toast.error("Please fill all the fields");
     }
   };
   return (

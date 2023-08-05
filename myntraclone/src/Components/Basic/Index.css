@@ -16,7 +16,7 @@
     box-sizing: border-box;
     position: sticky;
     top: 0;
-    z-index: 999;
+    z-index: 99;
     background-color: white;
     box-shadow: 0 4px 12px 0 rgba(0,0,0,.05);
 }

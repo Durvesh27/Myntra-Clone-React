@@ -5,9 +5,11 @@ import { useNavigate } from 'react-router-dom'
 import { useContext } from 'react'
 import { AuthContext } from '../../Context'
 import { useEffect } from 'react'
-const Navbar = () => {
+import AddProduct from '../Seller/AddProduct'
+const Navbar = ({proCount,setProCount}) => {
 const router=useNavigate()
 const[logged,setLogged]=useState(false)
+const[showAdd,setShowAdd]=useState(false)
 const {state,login,logout}=useContext(AuthContext)
 
 useEffect(()=>{
@@ -38,8 +40,8 @@ setLogged(false)
     <input type="search" placeholder="Search for products,brands and more" />
   </div>
   <div id="profile">
-    <div id="pp">
-      <i className="fa-solid fa-user " />
+    <div id="pp" >
+      <i className="fa-solid fa-user " onClick={()=>router('/profile')}/>
       <div style={{marginTop: 3, marginLeft: 18}}>Profile</div>
       <div className="login">
         <div>
@@ -83,11 +85,11 @@ setLogged(false)
       <div style={{marginTop: "3px", marginLeft: "20px"}}>Wishlist</div>
     </div>
     <div id="bag">
-        <i style={{color: 'black'}} className="fa-solid fa-bag-shopping" onClick={()=>router('/cart')}  />
+      <i style={{color: 'black'}} className="fa-solid fa-bag-shopping" onClick={()=>router('/cart')}  />
       <div style={{marginTop: "3px", marginLeft: "20px"}}>Bag</div>
     </div>
     </>:
-    <div id="add" onClick={()=>router('/add-product')}>
+    <div id="add" onClick={()=>setShowAdd(true)}>
        <i class="fa-solid fa-plus fa-xl plus-i" style={{color: 'black'}}></i>
       <div style={{marginTop: "3px", marginLeft: "20px"}}>Add Products</div>
     </div>
@@ -95,6 +97,9 @@ setLogged(false)
 </>
 }
   </div>
+  {
+    showAdd && <AddProduct showAdd={showAdd} setShowAdd={setShowAdd} proCount={proCount} setProCount={setProCount}/>
+  }
 </div>
 
   )

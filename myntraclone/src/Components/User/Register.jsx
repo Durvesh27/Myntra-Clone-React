@@ -2,6 +2,7 @@ import React from "react";
 import "./Form.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 const Register = () => {
   const router = useNavigate();
   const [userData, setUserData] = useState({
@@ -46,14 +47,14 @@ const Register = () => {
                 enteredPassword: "",
                 confirmedPassword: "",
               });
-              return alert("Account Already Exist");
+              return toast("Account Already Exist");
             }
           }
         }
 
         array.push(data);
         localStorage.setItem("Users", JSON.stringify(array));
-        alert("Account Created Successfully");
+        toast.success("Account Created Successfully");
         router("/login");
         setUserData({
           name: "",
@@ -62,10 +63,10 @@ const Register = () => {
           confirmedPassword: "",
         });
       } else {
-        return alert("Please check entered password");
+        return toast.error("Please check entered password");
       }
     } else {
-      alert("Please fill all the fields");
+      toast.error("Please fill all the fields");
     }
   };
 
@@ -100,7 +101,7 @@ const Register = () => {
               placeholder="Enter Email Address"
               onChange={handleChange}
             />
-            <select onChange={selectRole} value={userData.role}>
+            <select onChange={selectRole} value={userData.role} className="select-input">
               <option >Buyer</option>
               <option >Seller</option>
             </select>
