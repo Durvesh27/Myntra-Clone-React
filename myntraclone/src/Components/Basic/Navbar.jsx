@@ -48,7 +48,7 @@ setLogged(false)
           <h3>Welcome</h3>
           <p> To access account and manage orders</p>
           {
-            logged && <p>Hello!  <span style={{color:"green",fontWeight:600}}>&nbsp;{state?.user?.name}&nbsp;<span style={{color:"red"}}>({state?.user?.role})</span></span></p>
+            logged && <p>Hello!  <span style={{color:"green",fontWeight:600}}>&nbsp;{state?.user?.name}</span></p>
           }
          
             <button onClick={()=>router('/login')}>

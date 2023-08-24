@@ -2,53 +2,51 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context";
 import { toast } from "react-hot-toast";
+import axios from "axios";
+import { useEffect } from "react";
 
 const Login = () => {
-  const [currentUserData, setCurrentUserData] = useState({
+  const [userData, setUserData] = useState({
     email: "",
     password: "",
   });
   const router = useNavigate();
   const{login,state}=useContext(AuthContext)
+
   const handleChange = (e) => {
-    setCurrentUserData({ ...currentUserData, [e.target.name]: e.target.value });
+    setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
-    if (currentUserData.email && currentUserData.password) {
-      const getData = JSON.parse(localStorage.getItem("Users"));
-      let flag = false;
-      for (let i = 0; i < getData.length; i++) {
-        if (
-          currentUserData.email === getData[i].email &&
-          currentUserData.password === getData[i].password
-        ) {
-          flag = true;
-          login(getData[i])
-          break;
+    if (userData.email && userData.password) {
+        const response = await axios.post("http://localhost:8001/login", { userData });
+        if (response.data.success) {
+            setUserData({ email: "", password: "" })
+            router('/')
+            toast.success(response.data.message)
+            localStorage.setItem("Token",JSON.stringify(response.data.token))
+            login(response.data.user)
+            console.log(response.data)
+        } else {
+            toast.error(response.data.message)
         }
-      }
-      if (flag === false) {
-        setCurrentUserData({ email: "", password: "" });
-        return alert("Invalid credentials");
-      } else {
-        // localStorage.setItem("Current-User", JSON.stringify(currentUserData));
-        toast.success("Logged in successfully");
-        router("/");
-        setCurrentUserData({ email: "", password: "" });
-      }
-      
+        console.log(response,"working")
     } else {
-      toast.error("Please fill all the fields");
+        toast.error("All fields are mandtory.")
     }
   };
+  useEffect(()=>{
+    if(state?.user?.name){
+    router("/")
+    }
+    },[state])
   return (
     <div className="form-body">
       <div className="mainBox">
         <img
           src="https://assets.myntassets.com/f_webp,dpr_1.5,q_60,w_400,c_limit,fl_progressive/assets/images/2023/2/7/c2be095d-a4fb-4981-bdad-9d69ea189da31675792659902-offer-banner-500-600x240-code-_-MYNTRA200.jpg"
-          alt
+          alt=""
         />
         <div className="second">
           <div>
@@ -61,17 +59,17 @@ const Login = () => {
               placeholder="Enter Email Address"
               onChange={handleChange}
               name="email"
-              value={currentUserData.email}
+              value={userData.email}
             />
             <input
               type="password"
               placeholder="Enter your password"
               onChange={handleChange}
               name="password"
-              value={currentUserData.password}
+              value={userData.password}
             />
             <p style={{ fontSize: "14px", margin: "20px 0" }}>
-              By continuing,i agree to the <b>Terms of use</b> &amp;{" "}
+              By continuing,i agree to the <b>Terms of use</b> 
               <b>Privacy policy</b>
             </p>
             <input type="submit" value="LOGIN" className="submit-btn" />
