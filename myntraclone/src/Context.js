@@ -28,10 +28,17 @@ payload:activeUser
 })
 }
 
+function logout(){
+// localStorage.removeItem("Token1")
+dispatch({
+type:"LOGOUT",
+})
+}
+
 
 useEffect(() => {
     const getCurrentUserData = async () => {
-      const token = JSON.parse(localStorage.getItem("Token"));
+      const token = JSON.parse(localStorage.getItem("Token1"));
       const response = await axios.post(
         "http://localhost:8001/getCurrentUser",
         { token }
@@ -51,7 +58,7 @@ useEffect(() => {
   }, []);
 
 return(
-<AuthContext.Provider value={{state,login}}>
+<AuthContext.Provider value={{state,login,logout}}>
     {children}
 </AuthContext.Provider>
 )

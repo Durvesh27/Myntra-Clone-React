@@ -25,7 +25,7 @@ const Login = () => {
             setUserData({ email: "", password: "" })
             router('/')
             toast.success(response.data.message)
-            localStorage.setItem("Token",JSON.stringify(response.data.token))
+            localStorage.setItem("Token1",JSON.stringify(response.data.token))
             login(response.data.user)
             console.log(response.data)
         } else {

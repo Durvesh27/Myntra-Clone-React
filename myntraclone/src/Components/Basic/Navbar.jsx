@@ -10,7 +10,7 @@ const Navbar = ({proCount,setProCount}) => {
 const router=useNavigate()
 const[logged,setLogged]=useState(false)
 const[showAdd,setShowAdd]=useState(false)
-const {state,login,logout}=useContext(AuthContext)
+const {state,logout}=useContext(AuthContext)
 
 useEffect(()=>{
 if(state?.user){
