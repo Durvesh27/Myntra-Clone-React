@@ -29,16 +29,17 @@ payload:activeUser
 }
 
 function logout(){
-// localStorage.removeItem("Token1")
+localStorage.removeItem("Token1")
 dispatch({
 type:"LOGOUT",
 })
 }
 
-
 useEffect(() => {
     const getCurrentUserData = async () => {
       const token = JSON.parse(localStorage.getItem("Token1"));
+      if(token){
+        try{
       const response = await axios.post(
         "http://localhost:8001/getCurrentUser",
         { token }
@@ -53,6 +54,11 @@ useEffect(() => {
           type: "LOGOUT",
         });
       }
+    }
+    catch(error){
+    console.log(error)
+    }
+    }
     };
     getCurrentUserData();
   }, []);

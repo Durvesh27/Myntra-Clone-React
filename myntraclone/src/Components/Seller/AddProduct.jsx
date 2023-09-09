@@ -2,6 +2,7 @@ import React from "react";
 import "./Seller.css";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
+import axios from "axios";
 const AddProduct = ({showAdd,setShowAdd,proCount,setProCount}) => {
   const [addPro, setAddPro] = useState({
     pri: "",
@@ -16,7 +17,7 @@ const AddProduct = ({showAdd,setShowAdd,proCount,setProCount}) => {
     setAddPro({ ...addPro, [e.target.name]: e.target.value });
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     if (
       addPro.pri &&
@@ -27,24 +28,22 @@ const AddProduct = ({showAdd,setShowAdd,proCount,setProCount}) => {
       addPro.category &&
       addPro.imgsrc
     ) {
-      const products = JSON.parse(localStorage.getItem("Men"));
-      addPro.id = Math.random() * 100;
-
-      let proDetails = {
-        pri: addPro.pri,
-        sec: addPro.sec,
-        price1: addPro.price1,
-        discount: addPro.discount,
-        category: addPro.category,
-        imgsrc: addPro.imgsrc,
-        id: addPro.id,
-        price2: addPro.price2,
-      };
-      products.push(proDetails);
-      localStorage.setItem("Men", JSON.stringify(products));
-      toast.success("Product added");
-      setProCount(!proCount)
-      setShowAdd(!showAdd)
+      const token = JSON.parse(localStorage.getItem("Token1"));
+      const response = await axios.post("http:localhost:8001/addProduct",{token, addPro });
+      if (response.data.success) {
+        setAddPro({
+          pri:"",
+          sec:"",
+          price1:"",
+          price2:"",
+          discount:"",
+          category:"",
+          imgsrc:""
+        })
+        toast.success("Product added");
+        setProCount(!proCount)
+        setShowAdd(!showAdd)
+      }
     }
   }
   return (

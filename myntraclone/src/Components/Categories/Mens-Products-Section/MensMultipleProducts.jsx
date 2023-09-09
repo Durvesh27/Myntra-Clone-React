@@ -7,7 +7,6 @@ import { useState } from "react";
 const MensMultipleProducts = ({proCount,setProCount}) => {
 const [products,setProducts]=useState([])
 const[myData,setMyData]=useState(false)
-// localStorage.setItem("Men",JSON.stringify(MensData))
 
 useEffect(()=>{
 const productData=JSON.parse(localStorage.getItem("Men"))

@@ -1,33 +1,38 @@
 import ProductModal from "../Modals/Product.Modal.js";
 import jwt from "jsonwebtoken";
-import UserModal from "../Modals/User.Modal.js";
 export const addProduct = async (req, res) => {
   try {
-    const { name, price, category, image, token } = req.body;
-    if (!name || !category || !image || !price || !token) {
+    console.log("work")
+    const { pri, sec, category, imgsrc, discount,price1,price2,token } = req.body
+    // const {token}=req.body
+    if (!pri || !sec || !imgsrc || !price1 || !price2 || !discount || !category) {
       return res
         .status(404)
-        .json({ status: "error", message: "All Fields Mandatory" });
+        .json({ success:false, message: "All Fields Mandatory" });
     }
+    console.log("work")
     const decodedData = jwt.verify(token, process.env.JWT_SECRET);
     if (!decodedData) {
       return res
         .status(404)
-        .json({ status: "error", message: "Token not valid" });
+        .json({ success:false, message: "Token not valid" });
     }
     const userId = decodedData?.userId;
     const product = new ProductModal({
-      name,
-      price,
-      image,
+      pri,
+      sec,
+      imgsrc,
       category,
+      discount,
+      price1,
+      price2,
       userId: userId,
     });
     await product.save();
 
-    return res.status(201).json({ status: "Success" });
+    return res.status(200).json({ success:true,productData:product });
   } catch (error) {
-    res.status(500).json({ status: "error", message: error });
+    res.status(500).json({success:false, message: error });
   }
 };
 

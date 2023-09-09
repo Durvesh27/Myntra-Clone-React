@@ -19,8 +19,7 @@ setLogged(true)
 setLogged(false)
 }
 },[state])
-
-
+console.log(state.user,"user")
   return (
 <div id="navbar">
   <div id="icon">
@@ -42,7 +41,7 @@ setLogged(false)
   <div id="profile">
     <div id="pp" >
       <i className="fa-solid fa-user " onClick={()=>router('/profile')}/>
-      <div style={{marginTop: 3, marginLeft: 18}}>Profile</div>
+      <div style={{marginTop: "3px", marginLeft: "18px"}}>Profile</div>
       <div className="login">
         <div>
           <h3>Welcome</h3>
@@ -75,6 +74,7 @@ setLogged(false)
     </div>
     {
       logged &&
+    
     <>
     {
       state?.user?.role==="Buyer"?

@@ -1,11 +1,19 @@
 import mongoose,{Schema} from "mongoose";
 
 const productSchema=new Schema({
- name:{
+ pri:{
     type:String,
     required:true
  },
- price:{
+ sec:{
+    type:String,
+    required:true
+ },
+ price1:{
+    type:Number,
+    required:true
+ },
+ price2:{
     type:Number,
     required:true
  },
@@ -13,8 +21,12 @@ const productSchema=new Schema({
     type:String,
     required:true
  },
- image:{
+ imgsrc:{
     type:String,
+    required:true
+ },
+discount:{
+    type:Number,
     required:true
  },
  userId:{
