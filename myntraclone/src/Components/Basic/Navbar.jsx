@@ -19,7 +19,7 @@ setLogged(true)
 setLogged(false)
 }
 },[state])
-console.log(state.user,"user")
+// console.log(state.user,"user")
   return (
 <div id="navbar">
   <div id="icon">

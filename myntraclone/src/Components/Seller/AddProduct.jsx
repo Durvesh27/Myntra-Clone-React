@@ -29,7 +29,7 @@ const AddProduct = ({showAdd,setShowAdd,proCount,setProCount}) => {
       addPro.imgsrc
     ) {
       const token = JSON.parse(localStorage.getItem("Token1"));
-      const response = await axios.post("http:localhost:8001/addProduct",{token, addPro });
+      const response = await axios.post("http://localhost:8001/addProduct",{token, addPro });
       if (response.data.success) {
         setAddPro({
           pri:"",

@@ -1,10 +1,22 @@
 import React from 'react'
-import WomensData from './WomensProData';
 import "./../../Categories/MultipleProduct.css";
 import star1 from './../../Images/star.png'
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import axios from 'axios';
+import { useEffect } from 'react';
 const WomensMultipleProducts = () => {
+const[WomensData,setWomensData]=useState([])
 const router=useNavigate();
+useEffect(()=>{
+  async function MensProducts(){
+  const response=await axios.get("http://localhost:8001/all-products")
+  if(response.data.success){
+    setWomensData(response.data.products.filter(item=>item.category==="Womens Clothing"))
+  }
+  } 
+  MensProducts()
+  },[])
   return (
 <div>
   <div className="top1">
@@ -135,7 +147,7 @@ const router=useNavigate();
     {
 WomensData.map((WomensData)=>(
       <div className="main">
-        <img src={WomensData?.imgsrc} alt="" onClick={()=>router(`/single-product/${WomensData?.id}`)}/>
+        <img src={WomensData?.imgsrc} alt="" onClick={()=>router(`/single-product/${WomensData?._id}`)}/>
         <h4>{WomensData?.pri}</h4>
         <p>{WomensData?.category}</p>
         <span className="box">

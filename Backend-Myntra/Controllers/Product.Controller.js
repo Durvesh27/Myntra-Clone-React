@@ -2,15 +2,13 @@ import ProductModal from "../Modals/Product.Modal.js";
 import jwt from "jsonwebtoken";
 export const addProduct = async (req, res) => {
   try {
-    console.log("work")
-    const { pri, sec, category, imgsrc, discount,price1,price2,token } = req.body
-    // const {token}=req.body
+    const { pri, sec, category, imgsrc, discount,price1,price2 } = req.body.addPro
+    const {token}=req.body
     if (!pri || !sec || !imgsrc || !price1 || !price2 || !discount || !category) {
       return res
         .status(404)
         .json({ success:false, message: "All Fields Mandatory" });
     }
-    console.log("work")
     const decodedData = jwt.verify(token, process.env.JWT_SECRET);
     if (!decodedData) {
       return res
@@ -40,18 +38,20 @@ export const allProducts = async (req, res) => {
   try {
     const products = await ProductModal.find({
       isBlocked: false,
-      isVerified: true,
+      isVerified: false,
     });
     if (products.length) {
-      return res.status(200).json({ status: "success", products: products });
+      return res.status(200).json({ success:true, products: products });
     }
     return res
       .status(404)
-      .json({ status: "error", message: "No Products found" });
+      .json({ success:false, message: "No Products found" });
   } catch (error) {
-    return res.status(500).json({ status: "error", message: error });
+    return res.status(500).json({ success:false, message: error });
   }
 };
+
+
 
 export const getYourProduct = async (req, res) => {
   try {
@@ -76,6 +76,22 @@ export const getYourProduct = async (req, res) => {
     return res.status(500).json({ status: "error", message: error });
   }
 };
+
+export const SingleProduct = async (req, res) => {
+  try {
+      const { userId } = req.body;
+      if (!userId) return res.status(404).json({ success: false, message: "Product id is mandtory.." })
+
+      const product = await ProductModal.findById(userId);
+      if (product) {
+          return res.status(200).json({ success: true, productData:product })
+      }
+      return res.status(404).json({ success: false, error: "Products details not found." })
+
+  } catch (error) {
+      return res.status(500).json({ success: false, error: error.message })
+  }
+}
 
 export const updateYourProduct = async (req, res) => {
   try {

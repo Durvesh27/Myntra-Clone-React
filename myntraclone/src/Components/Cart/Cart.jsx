@@ -3,57 +3,48 @@ import "./Cart.css";
 import logo from "../Images/myntraLOGO.webp";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
+import axios from "axios";
+import { AuthContext } from "../../Context";
 
 const Cart = () => {
-  const [cart, setCart] = useState();
+  const [cart, setCart] = useState([]);
   const [final, setFinal] = useState(0);
+  const [updatedData,setUpdatedData]=useState(false)
+  var token=JSON.parse(localStorage.getItem("Token1"))
+  useEffect(()=>{
+  async function getCartProducts(){ 
+  const {data}=await axios.post("http://localhost:8001/get-cart-products",{token})
+  if(data.success){
+  setCart(data.products)
+  }
+  }
+  getCartProducts()
+  },[updatedData])
 
-  const users = JSON.parse(localStorage.getItem("Users"));
-  const current = JSON.parse(localStorage.getItem("Current-User"));
+  useEffect(()=>{
+  let totalPrice=0;
+  cart.forEach((element)=>{
+  totalPrice+=element?.price1;
+  })
+  setFinal(totalPrice)
+  },[cart])
 
-  useEffect(() => {
-    users.forEach((element) => {
-      if (element.email === current.email){
-        setCart(element.cart);
-      }
-    });
-  }, []);
 
-  useEffect(() => {
-    if (cart?.length >= 0) {
-      let totalPrice = 0;
-      cart.forEach((item) => {
-        totalPrice += item?.price1;
-      });
-      setFinal(totalPrice);
-    }
-  }, [cart]);
-
-  function delItem(itemId) {
-    let updatedItems = cart.filter((ele) => {
-      return ele.id !== itemId;
-    });
-    users.forEach((data) => {
-      if (data.email === current.email) {
-        data.cart = updatedItems;
-      }
-    });
-    toast("Item deleted")
-    localStorage.setItem("Users",JSON.stringify(users))
-    setCart(updatedItems);
+  const delItem=async(productId)=>{
+  const {data}=await axios.post("http://localhost:8001/delete-cart-product",{productId,token})
+  if(data.success){
+    setUpdatedData(!updatedData)
+    toast.success("Item deleted")
+  }
   }
 
-  function clearAll() {
-    users.forEach((data) => {
-      if (data.email === current.email) {
-        data.cart = [];
-      }
-    });
-    toast.success("Proceed to Checkout")
-    localStorage.setItem("Users",JSON.stringify(users))
-    setCart([])
+  const clearAll=async()=>{
+    const {data}=await axios.post("http://localhost:8001/clear-cart",{token})
+    if(data.success){
+      setUpdatedData(!updatedData)
+      toast.success("Proceed to Checkout")
+    }   
   }
-
   return (
     <div>
       {/* <div className="cart-navbar">
@@ -137,7 +128,7 @@ const Cart = () => {
               <div className="product">
                 <i
                   class="fa-solid fa-xmark cart-cross"
-                  onClick={() => delItem(Cart?.id)}
+                  onClick={() => delItem(Cart?._id)}
                 ></i>
                 <div>
                   <img src={Cart?.imgsrc} alt="" />
@@ -234,14 +225,14 @@ const Cart = () => {
             </p>
           </div>
           <div className="price">
-            <h5>PRICE DETAILS (2 Items)</h5>
+            <h5>PRICE DETAILS ({cart?.length} Items)</h5>
             <div className="price-flex">
               <div style={{ marginRight: 150 }}>Total MRP</div>
               <div>Rs.{final}</div>
             </div>
             <div className="price-flex">
               <div style={{ marginRight: 101 }}>Discount on MRP</div>
-              <div>-Rs.{final / 3}</div>
+              <div>-Rs.{Math.round(final / 3)}</div>
             </div>
             <div className="price-flex">
               <div style={{ marginRight: 75 }}>Coupon Discount</div>
@@ -256,7 +247,7 @@ const Cart = () => {
             <div style={{ marginRight: 132, fontWeight: 700 }}>
               Total amount
             </div>
-            <div style={{ fontWeight: 700 }}>Rs.{final - final / 3 - 10}</div>
+            <div style={{ fontWeight: 700 }}>Rs.{Math.round(final - final / 3 - 10)}</div>
           </div>
           <button
             style={{

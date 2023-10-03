@@ -3,9 +3,9 @@ import dotenv from "dotenv"
 import cors from 'cors'
 import mongoose from "mongoose"
 import { Login, Register, getCurrentUser } from './Controllers/User.Controller.js';
-import { addComments, addProduct, addRating, allProducts, deleteYourProduct, getYourProduct, updateYourProduct } from './Controllers/Product.Controller.js';
+import { SingleProduct, addComments, addProduct, addRating, allProducts, deleteYourProduct, getYourProduct, updateYourProduct } from './Controllers/Product.Controller.js';
 import { Admin, checkSeller, isValidUser } from './Middlewares/All.Middlewares.js';
-import { addCart, addWishlist, deleteCartProduct, getCartProducts, getWishlistProducts } from './Controllers/Buyer.controller.js';
+import { MoveToCart, addCart, addWishlist, clearCart, deleteCartProduct, deleteWishlistProduct, getCartProducts, getWishlistProducts } from './Controllers/Buyer.controller.js';
 import { blockProduct, blockUser, getAllBuyers, getAllProducts, getAllSellers, unBlockProduct, unBlockUser, verifyProduct } from './Controllers/Admin.Controller.js';
 
 const app=express()
@@ -26,16 +26,17 @@ app.get("/get-your-product",checkSeller,getYourProduct)
 app.patch("/update-product",checkSeller,updateYourProduct)
 app.delete("/delete-product",checkSeller,deleteYourProduct)
 app.post("/add-cart",addCart)
-app.get("/get-cart-products",getCartProducts)
-
+app.post("/get-cart-products",getCartProducts)
+app.post("/move-to-cart",MoveToCart)
 app.patch("/add-rating",isValidUser,addRating)
 app.patch("/add-comments",isValidUser,addComments)
-
+app.post("/single-product",SingleProduct)
 
 app.post("/add-wishlist",addWishlist)
-app.get("/get-wishlist-products",getWishlistProducts)
-app.delete("/delete-cart-product",deleteCartProduct)
-
+app.post("/get-wishlist-products",getWishlistProducts)
+app.post("/delete-cart-product",deleteCartProduct)
+app.post("/delete-wishlist-product",deleteWishlistProduct)
+app.post("/clear-cart",clearCart)
 app.get("/get-all-buyers",Admin,getAllBuyers)
 app.get("/get-all-sellers",Admin,getAllSellers)
 app.get("/get-all-products",Admin,getAllProducts)

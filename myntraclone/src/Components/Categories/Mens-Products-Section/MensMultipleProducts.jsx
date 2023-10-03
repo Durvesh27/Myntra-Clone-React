@@ -4,17 +4,24 @@ import MensData from "./MensProData";
 import star1 from './../../Images/star.png'
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
 const MensMultipleProducts = ({proCount,setProCount}) => {
 const [products,setProducts]=useState([])
 const[myData,setMyData]=useState(false)
 
+// useEffect(()=>{
+// const productData=JSON.parse(localStorage.getItem("Men"))
+// setProducts(productData)
+// },[proCount])
 useEffect(()=>{
-const productData=JSON.parse(localStorage.getItem("Men"))
-setProducts(productData)
-},[proCount])
-
-console.log(products,"State products")
-
+async function MensProducts(){
+const response=await axios.get("http://localhost:8001/all-products")
+if(response.data.success){
+  setProducts(response.data.products.filter((item)=>item.category==="Men Clothing"))
+}
+} 
+MensProducts()
+},[])
 
 const router=useNavigate()
   return (
@@ -214,7 +221,7 @@ const router=useNavigate()
         <div id="rightSection">
           {products.map((pro) => (
             <div className="main">
-              <img src={pro?.imgsrc} onClick={()=>router(`/single-product/${pro?.id}`)}/>
+              <img src={pro?.imgsrc} onClick={()=>router(`/single-product/${pro?._id}`)}/>
               <h4>{pro?.pri}</h4>
               <p>{pro?.category}</p>
               <span className="box">

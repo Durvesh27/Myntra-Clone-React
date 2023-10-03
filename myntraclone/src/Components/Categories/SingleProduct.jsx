@@ -3,47 +3,45 @@ import "./SingleProduct.css";
 import star1 from "../Images/star.png";
 import star2 from "../Images/STAR2.jpg";
 import { useParams } from "react-router-dom";
-import MensData from "./Mens-Products-Section/MensProData";
-import WomensData from "./Women-Products-Section/WomensProData";
 import UpdateProduct from "../Seller/UpdateProduct";
 import { useContext } from "react";
 import { AuthContext } from "../../Context";
 import { toast } from "react-hot-toast";
+import axios from "axios";
 const SingleProduct = () => {
   const { userId } = useParams();
   const [proData, setProData] = useState();
   const [click, setClick] = useState(false);
   const { state } = useContext(AuthContext);
-  const products = JSON.parse(localStorage.getItem("Men"));
-  useEffect(() => {
-    products.map((data) => {
-      if (data.id == userId) {
-        setProData(data);
-      }
-    });
-  }, []);
 
-  useEffect(() => {
-    WomensData.map((data) => {
-      if (data.id == userId) {
-        setProData(data);
-      }
-    });
-  }, []);
+useEffect(()=>{
+async function viewProduct(){
+const {data}=await axios.post("http://localhost:8001/single-product",{userId})
+if(data.success){
+setProData(data.productData)
+}
+}
+viewProduct()
+},[])
 
-  function addTocart() {
-    const currentUser = JSON.parse(localStorage.getItem("Current-User"));
-    const users = JSON.parse(localStorage.getItem("Users"));
-    users.forEach((item) => {
-      if (item.email === currentUser.email) {
-        item.cart.push(proData);
-        toast.success("Item Added to cart");
-      }
-    });
-    localStorage.setItem("Users", JSON.stringify(users));
-    
-  }
 
+const addTocart=async()=>{
+  const productId=proData._id;
+  const token=JSON.parse(localStorage.getItem("Token1"))
+  const {data}=await axios.post("http://localhost:8001/add-cart",{productId,token})
+  if(data.success){
+  toast.success("Item added to cart")
+  }  
+}
+
+const addToWishlist=async()=>{
+  const productId=proData._id;
+  const token=JSON.parse(localStorage.getItem("Token1"))
+  const {data}=await axios.post("http://localhost:8001/add-wishlist",{productId,token})
+  if(data.success){
+  toast.success("Item added to Wishlist")
+  } 
+}
   return (
     <div>
       <div id="text">
@@ -111,13 +109,13 @@ const SingleProduct = () => {
                   </button>
                   <button>
                     <i className="fa-regular fa-heart fa-lg" />
-                    <b>WISHLIST</b>
+                    <b onClick={addToWishlist}>WISHLIST</b>
                   </button>
                 </>
               ) : (
                 <button>
                   <i class="fa-solid fa-pen"></i>
-                  <b onClick={() => setClick(!click)}>
+                  <b onClick={()=>setClick(!click)}>
                     &nbsp;&nbsp;UPDATE PRODUCT
                   </b>
                 </button>
