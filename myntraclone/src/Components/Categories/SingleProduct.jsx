@@ -12,7 +12,7 @@ const SingleProduct = () => {
   const { userId } = useParams();
   const [proData, setProData] = useState();
   const [click, setClick] = useState(false);
-  const { state } = useContext(AuthContext);
+  const {state,count,setCount} = useContext(AuthContext);
 
 useEffect(()=>{
 async function viewProduct(){
@@ -24,12 +24,18 @@ setProData(data.productData)
 viewProduct()
 },[])
 
+// useEffect(()=>{
+//   if(state.user){
+//   setCount(state.user.cartCount)
+//   }
+//   },[])
 
 const addTocart=async()=>{
   const productId=proData._id;
   const token=JSON.parse(localStorage.getItem("Token1"))
   const {data}=await axios.post("http://localhost:8001/add-cart",{productId,token})
   if(data.success){
+  setCount(count+1)
   toast.success("Item added to cart")
   }  
 }

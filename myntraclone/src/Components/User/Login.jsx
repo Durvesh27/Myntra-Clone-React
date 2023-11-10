@@ -27,11 +27,9 @@ const Login = () => {
             toast.success(response.data.message)
             localStorage.setItem("Token1",JSON.stringify(response.data.token))
             login(response.data.user)
-            console.log(response.data)
         } else {
             toast.error(response.data.message)
         }
-        console.log(response,"working")
     } else {
         toast.error("All fields are mandtory.")
     }

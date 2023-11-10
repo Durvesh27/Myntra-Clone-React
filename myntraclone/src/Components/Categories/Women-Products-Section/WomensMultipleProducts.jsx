@@ -5,19 +5,25 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
+import { ColorRing } from 'react-loader-spinner';
 const WomensMultipleProducts = () => {
 const[WomensData,setWomensData]=useState([])
+const[loading,setLoading]=useState(false)
 const router=useNavigate();
 useEffect(()=>{
   async function MensProducts(){
   const response=await axios.get("http://localhost:8001/all-products")
   if(response.data.success){
     setWomensData(response.data.products.filter(item=>item.category==="Womens Clothing"))
+    setLoading(true)
   }
   } 
   MensProducts()
   },[])
   return (
+    <>
+    {
+      loading? 
 <div>
   <div className="top1">
     <p>Home / Clothing / <b> Sarees</b> </p>
@@ -202,8 +208,22 @@ WomensData.map((WomensData)=>(
       </div>
     </div>
 
-  </div></div>
+  </div>
+  </div>:
+  <div style={{height:"80vh",width:"100%",display:"flex",justifyContent:"center",alignItems:"center"}}>
+  <ColorRing
+    visible={true}
+    height="50"
+    width="50"
+    ariaLabel="blocks-loading"
+    wrapperStyle={{}}
+    wrapperClass="blocks-wrapper"
+    colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+  />
+  </div>
 
+}
+</>
   )
 }
 

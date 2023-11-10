@@ -5,19 +5,18 @@ import star1 from './../../Images/star.png'
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+
+import { ColorRing} from  'react-loader-spinner'
 const MensMultipleProducts = ({proCount,setProCount}) => {
 const [products,setProducts]=useState([])
 const[myData,setMyData]=useState(false)
-
-// useEffect(()=>{
-// const productData=JSON.parse(localStorage.getItem("Men"))
-// setProducts(productData)
-// },[proCount])
+const [loading,setLoading]=useState(false)
 useEffect(()=>{
 async function MensProducts(){
 const response=await axios.get("http://localhost:8001/all-products")
 if(response.data.success){
   setProducts(response.data.products.filter((item)=>item.category==="Men Clothing"))
+  setLoading(true)
 }
 } 
 MensProducts()
@@ -25,6 +24,8 @@ MensProducts()
 
 const router=useNavigate()
   return (
+    <>
+    {loading? 
     <div>
       <div className="top1">
         <p>
@@ -275,7 +276,21 @@ const router=useNavigate()
           </div>
         </div>
       </div>
-    </div>
+    </div>:
+    // <h2 style={{textAlign:"center"}}>Loading</h2>}
+<div style={{height:"80vh",width:"100%",display:"flex",justifyContent:"center",alignItems:"center"}}>
+<ColorRing
+  visible={true}
+  height="50"
+  width="50"
+  ariaLabel="blocks-loading"
+  wrapperStyle={{}}
+  wrapperClass="blocks-wrapper"
+  colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+/>
+</div>
+}
+    </>
   );
 };
 

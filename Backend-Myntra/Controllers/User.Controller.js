@@ -5,7 +5,7 @@ export const Register = async (req, res) => {
   try {
     const { userData } = req.body;
     const { name, email, password, role } = userData;
-    if (!name || !email || !password || !role){
+    if (!name || !email || !password || !role) {
       return res.send({ success: false, message: "All Fields are mandatory" });
     }
     const isEmailExist = await UserModal.find({ email: email });
@@ -40,7 +40,8 @@ export const Login = async (req, res) => {
       const userObject = {
         name: user.name,
         email: user.email,
-        role:user.role,
+        role: user.role,
+        cartCount: user.cart.length,
         _id: user._id,
       };
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
@@ -81,11 +82,58 @@ export const getCurrentUser = async (req, res) => {
     const userObject = {
       name: user?.name,
       email: user?.email,
-      role:user?.role,
+      role: user?.role,
+      cartCount: user.cart.length,
       _id: user?._id,
     };
     return res.status(200).json({ success: true, user: userObject });
   } catch (error) {
     return res.status(500).json({ success: false, message: error });
+  }
+};
+
+export const UpdateProfile = async (req, res) => {
+  try {
+    const { userData, token } = req.body;
+    const { name, email, password } = userData;
+    if (!token)
+      return res
+        .status(404)
+        .json({ success: false, message: "Token is required" });
+    const decodedData = jwt.verify(token, process.env.JWT_SECRET);
+    if (!decodedData) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Not a valid token" });
+    }
+    const userId = decodedData?.userId;
+    const user = await UserModal.findById(userId);
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+    if (name) {
+      user.name = name;
+    }
+    if (email) {
+      user.email = email;
+    }
+    const newHashedPassword= await bcrypt.hash(password,10)
+    if (password) {
+      user.password =newHashedPassword;
+    }
+    const updatedObj={
+      name: user?.name,
+      email: user?.email,
+      role: user?.role,
+      cartCount: user.cart.length,
+      _id: user?._id,
+    }
+    await user.save();
+    return res.json({ success: true,updatedDetails:updatedObj });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
   }
 };

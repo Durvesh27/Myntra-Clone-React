@@ -13,19 +13,15 @@ import Wishlist from "./Components/Cart/Wishlist";
 import SingleProduct from "./Components/Categories/SingleProduct";
 import Profile from "./Components/Basic/Profile";
 import Footer from "./Components/Basic/Footer";
-import { useState } from "react";
-
 
 
 function App() {
-const[proCount,setProCount]=useState(false)
-
   return (
     <>
-<Navbar proCount={proCount} setProCount={setProCount}/>
+<Navbar/>
 <Routes>
   <Route exact path="/" element={<Home/>}/>
-  <Route exact path="/mens-multiple-products" element={<MensMultipleProducts proCount={proCount} setProCount={setProCount}/>}/>
+  <Route exact path="/mens-multiple-products" element={<MensMultipleProducts />}/>
   <Route exact path="/womens-multiple-products" element={<WomensMultipleProducts/>}/>
   <Route exact path="/kids-multiple-products" element={<KidsMultipleProducts/>}/>
   <Route exact path="/home-multiple-products" element={<HomeMultipleProducts/>}/>
@@ -33,7 +29,7 @@ const[proCount,setProCount]=useState(false)
   <Route exact path="/register" element={<Register/>}/>
   <Route exact path="/login" element={<Login/>}/>
   <Route exact path="/profile" element={<Profile/>}/>
-  <Route exact path="/cart" element={<Cart/>}/>
+  <Route exact path="/cart" element={<Cart />}/>
   <Route exact path="/wishlist" element={<Wishlist/>}/>
   <Route exact path="/single-product/:userId" element={<SingleProduct/>}/>
 </Routes>

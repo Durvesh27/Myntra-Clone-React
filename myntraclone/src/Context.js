@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useReducer } from "react";
 import { createContext } from "react";
 
@@ -20,6 +20,7 @@ return state
 
 const AuthProvider=({children})=>{
 const[state,dispatch]=useReducer(reducer,initialValue)
+const[count,setCount]=useState(0)
 
 function login(activeUser){
 dispatch({
@@ -34,6 +35,8 @@ dispatch({
 type:"LOGOUT",
 })
 }
+
+
 
 useEffect(() => {
     const getCurrentUserData = async () => {
@@ -61,10 +64,10 @@ useEffect(() => {
     }
     };
     getCurrentUserData();
-  }, []);
+  }, [])
 
 return(
-<AuthContext.Provider value={{state,login,logout}}>
+<AuthContext.Provider value={{state,login,logout,count,setCount}}>
     {children}
 </AuthContext.Provider>
 )

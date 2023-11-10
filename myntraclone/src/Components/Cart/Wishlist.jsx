@@ -4,15 +4,18 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import { Triangle } from 'react-loader-spinner'
 const Wishlist = () => {
 const [wishlistProducts,setWishlistProducts]=useState([])
 const [updatedData,setUpdatedData]=useState(false)
+const[loading,setLoading]=useState(false)
 var token=JSON.parse(localStorage.getItem("Token1"))
 useEffect(()=>{
   async function getWishlistProducts(){ 
     const {data}=await axios.post("http://localhost:8001/get-wishlist-products",{token})
     if(data.success){
     setWishlistProducts(data.products)
+    setLoading(true)
     }
     }
     getWishlistProducts()
@@ -22,6 +25,7 @@ const delItem=async(productId)=>{
   const {data}=await axios.post("http://localhost:8001/delete-wishlist-product",{productId,token})
   if(data.success){
     setUpdatedData(!updatedData)
+    toast.success("Item removed from wishlist")
   }
   }
 
@@ -34,6 +38,9 @@ const moveToCart=async(productId)=>{
   }  
 }
   return (
+    <>
+    {
+      loading?
 <div className="wishlist">
   <p className="first"><b>My Wishlist</b> {wishlistProducts?.length} items</p>
   {
@@ -64,8 +71,20 @@ const moveToCart=async(productId)=>{
     Add product to wishlist
   </div>
 }
+</div>:
+<div style={{height:"80vh",width:"100%",display:"flex",justifyContent:"center",alignItems:"center"}}>
+<Triangle
+  height="60"
+  width="60"
+  color="#4fa94d"
+  ariaLabel="triangle-loading"
+  wrapperStyle={{}}
+  wrapperClassName=""
+  visible={true}
+/>
 </div>
-
+}
+</>
   )
 }
 
