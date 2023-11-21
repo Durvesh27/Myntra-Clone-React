@@ -6,14 +6,16 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 import { AuthContext } from "../../Context";
 import { InfinitySpin } from "react-loader-spinner";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
   const [final, setFinal] = useState(0);
-  const [num, setNum] = useState(0);
+  const [num, setNum] = useState();
   const [updatedData, setUpdatedData] = useState(false);
   const [loading, setLoading] = useState(false);
-  const {count, setCount } =useContext(AuthContext)
+  const { count, setCount } = useContext(AuthContext);
+  const router=useNavigate()
   var token = JSON.parse(localStorage.getItem("Token1"));
 
   useEffect(() => {
@@ -24,13 +26,18 @@ const Cart = () => {
       );
       if (data.success) {
         setCart(data.products);
-        setLoading(true)
+        setLoading(true);
       }
     }
     getCartProducts();
   }, [updatedData]);
 
-
+  // useEffect((quantity) => {
+  //   cart.reduce((initial,current) => {
+  //   let {price1}=current;
+  //   },0);
+  //   setFinal(totalPrice);
+  // }, [cart]);
 
   useEffect(() => {
     let totalPrice = 0;
@@ -40,7 +47,15 @@ const Cart = () => {
     setFinal(totalPrice);
   }, [cart]);
 
+  // useEffect(() => {
+  //   let totalPrice = 0;
+  //   cart.forEach((element) => {
 
+  //     totalPrice = totalPrice  + element?.price1*num
+  //     console.log(totalPrice,element._id,num,"price")
+  //   });
+  //   setFinal(totalPrice);
+  // }, [cart,num]);
 
   const delItem = async (productId) => {
     const { data } = await axios.post(
@@ -49,7 +64,7 @@ const Cart = () => {
     );
     if (data.success) {
       setUpdatedData(!updatedData);
-      setCount(count-1)
+      setCount(count - 1);
       toast.success("Item deleted");
     }
   };
@@ -60,17 +75,40 @@ const Cart = () => {
     });
     if (data.success) {
       setUpdatedData(!updatedData);
-      setCount(0)
+      setCount(0);
       toast.success("Proceed to Checkout");
     }
   };
 
-  const handleQuantity=()=>{
- 
-  }
-  const handleSize=()=>{
+  // const handleChange=(id,chngVal)=>{
+  // let total=cart.reduce((ini,curr)=>{
+  // let {price1,_id}=curr
+  // console.log(id,_id)
+  //   ini=ini+price1*chngVal;
+  //   console.log(ini,"initial")
+  //     return ini
+  // },0)
+  // setFinal(total)
+  // }
 
-  }
+  const handleChange = (id, chngVal) => {
+    let total = 0;
+    for (let i = 0; i < cart.length; i++) {
+      console.log(id,cart[i]._id)
+      if (id === cart[i]._id) {
+        total = total + chngVal * cart[i]?.price1;
+        // console.log("in",total,chngVal)
+      }
+      else{
+        total = total + cart[i]?.price1
+        // console.log("out",total,chngVal)
+        break;
+      }
+    }
+    setFinal(total);
+  };
+
+  const handleSize = () => {};
   return (
     <>
       {loading ? (
@@ -153,32 +191,41 @@ const Cart = () => {
                       <p>Sold by-{Cart?.pri} clothing</p>
                       <div className="num">
                         <button className="same">
-                          <b style={{marginRight:"5px"}}>Size:</b>
-                          {/* <i className="fa-solid fa-angle-down"  style={{marginLeft:"5px"}}/> */}
-                          <select className="select-size" onChange={(e)=>setNum(e.target.value)}>
-                            <option value="1" >1</option>
-                            <option value="2" >2</option>
-                            <option value="3" >3</option>
+                          <b style={{ marginRight: "5px" }}>Qty:</b>
+                          <select
+                            className="select-size"
+                            onChange={(e) =>
+                              handleChange(Cart._id, e.target.value)
+                            }
+                          >
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
                           </select>
                         </button>
                         <button className="same">
-                          <b style={{marginRight:"5px"}}>Qty:
-                          </b>
+                          <b style={{ marginRight: "5px" }}>Size:</b>
                           <select className="select-size">
-                            <option value="L" onChange={handleSize}>L</option>
-                            <option value="S" onChange={handleSize}>S</option>
-                            <option value="M" onChange={handleSize}>M</option>
+                            <option value="L" onChange={handleSize}>
+                              L
+                            </option>
+                            <option value="S" onChange={handleSize}>
+                              S
+                            </option>
+                            <option value="M" onChange={handleSize}>
+                              M
+                            </option>
                           </select>
                           {/* <i className="fa-solid fa-caret-down" style={{marginLeft:"5px"}}/> */}
                         </button>
                       </div>
-                      <span className="secText">
-                        <strong>₹{Cart?.price1} </strong>
+                      <span className="secText-cart">
+                        <strong>₹{Cart?.price1}&nbsp; </strong>
                         <span>
                           MRP
-                          <del>₹{Cart?.price2} </del>
+                          <del>₹{Cart?.price2}</del>
                         </span>
-                        <b>({Cart?.discount}% OFF)</b>
+                        <b>&nbsp;({Cart?.discount}% OFF)</b>
                       </span>
                       <p
                         style={{
@@ -204,7 +251,7 @@ const Cart = () => {
                 ))}
               </div>
 
-              <div className="wish">
+              <div className="wish" onClick={()=>router('/wishlist')}>
                 Add more items from Wishlist
                 <span>&gt;</span>
               </div>

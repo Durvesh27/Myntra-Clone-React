@@ -36,10 +36,13 @@ export const addProduct = async (req, res) => {
 
 export const allProducts = async (req, res) => {
   try {
+    // const {page,limit=5,category}=req.body;
+    // const skip=(parseInt(page)-1)-parseInt(limit)
+    // const limitValue=parseInt(limit)
     const products = await ProductModal.find({
       isBlocked: false,
       isVerified: false,
-    });
+    })
     if (products.length) {
       return res.status(200).json({ success:true, products: products });
     }
@@ -95,35 +98,45 @@ export const SingleProduct = async (req, res) => {
 
 export const updateYourProduct = async (req, res) => {
   try {
-    const { productId, name, price, category, image, token } = req.body;
-    if (!token)
+    const { pri,
+    sec,
+    price1,
+    price2,
+    discount,
+    category,
+    imgsrc} = req.body.storeData;
+    const {productId,token}=req.body;
+    if (!token){
+      console.log("no token")
       return res
-        .status(404)
-        .json({ status: "error", message: "Token is required" });
+      .status(404)
+      .json({ success:false, message: "Token is required" });
+    }   
     const decodedData = jwt.verify(token, process.env.JWT_SECRET);
     if (!decodedData) {
+      console.log("invalid token")
       return res
         .status(404)
-        .json({ status: "error", message: "Token not valid" });
+        .json({ success:false, message: "Token not valid" });
     }
     const userId = decodedData?.userId;
 
     const updatedProduct = await ProductModal.findOneAndUpdate(
       { _id: productId, userId: userId },
-      { name, price, category, image },
+      { pri,sec,price1,price2, category,discount, imgsrc },
       { new: true }
     );
     if (updatedProduct) {
       return res
         .status(200)
-        .json({ status: "Sucess", product: updatedProduct });
+        .json({ success:true, productData: updatedProduct });
     }
     return res.status(404).json({
-      status: "error",
+      success:false,
       message: "You are trying to update product which is not yours..",
     });
   } catch (error) {
-    return res.status(500).json({ status: "error", message: error });
+    return res.status(500).json({ success:false, message: error.message });
   }
 };
 
@@ -183,3 +196,17 @@ export const addComments = async (req, res) => {
     return res.status(500).json({ status: "error", error: error.message });
   }
 };
+
+export const searchProducts=async (req,res)=>{
+try{
+const keyword=req.query.search? 
+{
+pri:{$regex:req.query.search,$options:"i"}
+}:{}
+const products=await ProductModal.find(keyword)
+return res.status(200).json({ success:true, products});
+}
+catch (error) {
+  return res.status(500).json({ success:false, error: error.message });
+}
+}

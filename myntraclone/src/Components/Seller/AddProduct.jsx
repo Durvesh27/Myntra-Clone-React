@@ -3,7 +3,7 @@ import "./Seller.css";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import axios from "axios";
-const AddProduct = ({showAdd,setShowAdd,proCount,setProCount}) => {
+const AddProduct = ({showAdd,setShowAdd}) => {
   const [addPro, setAddPro] = useState({
     pri: "",
     sec: "",
@@ -41,7 +41,6 @@ const AddProduct = ({showAdd,setShowAdd,proCount,setProCount}) => {
           imgsrc:""
         })
         toast.success("Product added");
-        setProCount(!proCount)
         setShowAdd(!showAdd)
       }
     }

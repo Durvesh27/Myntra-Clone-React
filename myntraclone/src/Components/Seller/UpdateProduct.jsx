@@ -1,11 +1,14 @@
 import React from "react";
+import { useContext } from "react";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
+import { AuthContext } from "../../Context";
+import axios from "axios";
 
-const UpdateProduct = ({id,setProData,click,setClick}) => {
+const UpdateProduct = ({ id, setProData, click, setClick }) => {
   const [storeData, setStoreData] = useState({
     pri: "",
-    sec:"",
+    sec: "",
     price1: "",
     price2: "",
     discount: "",
@@ -13,35 +16,37 @@ const UpdateProduct = ({id,setProData,click,setClick}) => {
     imgsrc: "",
   });
 
-  const [myData, setMyData] = useState();
+  const { state } = useContext(AuthContext);
 
   function handleChange(e) {
     setStoreData({ ...storeData, [e.target.name]: e.target.value });
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
+    const token = JSON.parse(localStorage.getItem("Token1"));
     e.preventDefault();
-    storeData["id"] = id;
-    const products = JSON.parse(localStorage.getItem("Men"));
-
-    let updated = products.findIndex((item) => {
-      if (id === item.id) return item;
-    });
-
-    products.splice(updated, 1, storeData);
-    localStorage.setItem("Men", JSON.stringify(products));
-    setProData(storeData);
-    setClick(!click)
-    toast.success("Product Updated");
+    try {
+      console.log("proId",id,"userId",state?.user?._id)
+      const { data } = await axios.patch(
+        "http://localhost:8001/update-product",
+        { storeData, productId: id, token }
+      );
+      if(data.success){
+      toast.success("Product Updated");
+      setClick(!click)
+      setProData(data.productData)
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   }
-
 
   return (
     <div>
       <div
         style={{
           background: "rgba(0,0,0,0.5)",
-          position: "absolute",
+          position: "fixed",
           top: 0,
           left: 0,
           width: "100%",
@@ -53,7 +58,7 @@ const UpdateProduct = ({id,setProData,click,setClick}) => {
         style={{
           width: "30%",
           lineHeight: "30px",
-          position: "absolute",
+          position: "fixed",
           top: "130px",
           left: "510px",
           padding: "20px",
@@ -61,7 +66,7 @@ const UpdateProduct = ({id,setProData,click,setClick}) => {
           background: "white",
         }}
       >
-        <h2>
+        <h2 style={{marginBottom:"15px"}}>
           Update Product{" "}
           <span
             style={{ fontSize: "18px", marginLeft: "250px" }}
@@ -78,7 +83,13 @@ const UpdateProduct = ({id,setProData,click,setClick}) => {
             name="pri"
             onChange={handleChange}
           />
-           <input type="text" placeholder='Enter Product Description' className='add-input'name="sec" onChange={handleChange}/>
+          <input
+            type="text"
+            placeholder="Enter Product Description"
+            className="add-input"
+            name="sec"
+            onChange={handleChange}
+          />
           <input
             type="number"
             placeholder="Enter Selling Price"

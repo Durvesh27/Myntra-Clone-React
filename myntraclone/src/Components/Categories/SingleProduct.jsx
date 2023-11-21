@@ -12,42 +12,49 @@ const SingleProduct = () => {
   const { userId } = useParams();
   const [proData, setProData] = useState();
   const [click, setClick] = useState(false);
-  const {state,count,setCount} = useContext(AuthContext);
+  const { state, count, setCount } = useContext(AuthContext);
+  useEffect(() => {
+    async function viewProduct() {
+      const { data } = await axios.post(
+        "http://localhost:8001/single-product",
+        { userId }
+      );
+      if (data.success) {
+        setProData(data.productData);
+      }
+    }
+    viewProduct();
+  }, []);
 
-useEffect(()=>{
-async function viewProduct(){
-const {data}=await axios.post("http://localhost:8001/single-product",{userId})
-if(data.success){
-setProData(data.productData)
-}
-}
-viewProduct()
-},[])
 
-// useEffect(()=>{
-//   if(state.user){
-//   setCount(state.user.cartCount)
-//   }
-//   },[])
 
-const addTocart=async()=>{
-  const productId=proData._id;
-  const token=JSON.parse(localStorage.getItem("Token1"))
-  const {data}=await axios.post("http://localhost:8001/add-cart",{productId,token})
-  if(data.success){
-  setCount(count+1)
-  toast.success("Item added to cart")
-  }  
-}
+  const addTocart = async () => {
+    const productId = proData._id;
+    const token = JSON.parse(localStorage.getItem("Token1"));
+    const { data } = await axios.post("http://localhost:8001/add-cart", {
+      productId,
+      token,
+    });
+    if (data.success) {
+      setCount(count + 1);
+      toast.success("Item added to cart");
+    }
+  };
 
-const addToWishlist=async()=>{
-  const productId=proData._id;
-  const token=JSON.parse(localStorage.getItem("Token1"))
-  const {data}=await axios.post("http://localhost:8001/add-wishlist",{productId,token})
-  if(data.success){
-  toast.success("Item added to Wishlist")
-  } 
-}
+  const addToWishlist = async () => {
+    const productId = proData._id;
+    const token = JSON.parse(localStorage.getItem("Token1"));
+    const { data } = await axios.post("http://localhost:8001/add-wishlist", {
+      productId,
+      token,
+    });
+    if (data.success) {
+      toast.success("Item added to Wishlist");
+    }
+  };
+
+
+
   return (
     <div>
       <div id="text">
@@ -95,33 +102,38 @@ const addToWishlist=async()=>{
               <b>({proData?.discount}% OFF)</b>
             </span>
             <p>inclusive of all Taxes</p>
-            <div>
-              <div>SELECT SIZE</div>
-              <div>SIZE CHART&gt;</div>
-            </div>
-            <div>
-              <div>S</div>
-              <div>M</div>
-              <div>L</div>
-              <div>XL</div>
-              <div>XXL</div>
-            </div>
+            {proData?.category == "Men Clothing" && (
+              <div>
+                <div className="add-btn-item">SELECT SIZE</div>
+                <div className="add-btn-item">SIZE CHART&gt;</div>
+              </div>
+            )}
+            {proData?.category == "Men Clothing" && (
+              <div>
+                <div>S</div>
+                <div>M</div>
+                <div>L</div>
+                <div>XL</div>
+                <div>XXL</div>
+              </div>
+            )}
+
             <div>
               {state?.user?.role === "Buyer" ? (
                 <>
-                  <button>
+                  <button className="addCart-btn">
                     <i className="fa-solid fa-bag-shopping fa-lg" />
-                    <b onClick={addTocart}>&nbsp;&nbsp;ADD TO BAG</b>
+                    <b onClick={addTocart}>&nbsp;ADD TO BAG</b>
                   </button>
-                  <button>
+                  <button className="wish-btn">
                     <i className="fa-regular fa-heart fa-lg" />
-                    <b onClick={addToWishlist}>WISHLIST</b>
+                    <b onClick={addToWishlist}>&nbsp;WISHLIST</b>
                   </button>
                 </>
               ) : (
-                <button>
+                <button className="addCart-btn">
                   <i class="fa-solid fa-pen"></i>
-                  <b onClick={()=>setClick(!click)}>
+                  <b onClick={() => setClick(!click)}>
                     &nbsp;&nbsp;UPDATE PRODUCT
                   </b>
                 </button>
@@ -379,7 +391,7 @@ const addToWishlist=async()=>{
       </div>
       {click && (
         <UpdateProduct
-          id={proData?.id}
+          id={proData?._id}
           setProData={setProData}
           click={click}
           setClick={setClick}

@@ -3,7 +3,7 @@ width: 35%;
 margin: auto;
 padding: 15px;
 background-color: white;
-position: absolute;
+position: fixed;
 top: 130px;
 left: 510px;
 z-index: 999;

@@ -21,12 +21,9 @@
 
 #rightSection {
     width: 84%;
-    border-left: 1px solid #edebef;
+    height: 90%;
     display: flex;
-    justify-content: space-around;
     flex-wrap: wrap;
-    /* padding-top: 25px;
-    padding-left: 15px; */
     padding-top: 24px;
 padding-left: 15px;
 padding-right: 20px;
@@ -88,6 +85,7 @@ padding-right: 20px;
 
 #leftSection {
     margin-top: 20px;
+    border-right: 1px solid #edebef;
 }
 
 #leftSection div:nth-child(1) {
@@ -150,6 +148,7 @@ label {
     height:15px;
     background-color: blue;
     border-radius:50%;
+    margin-right: 5px;
 }
 #rightSection .main{
     width: 17%;
@@ -157,7 +156,8 @@ label {
     position: relative;
     /* border: 1px solid blue; */
     z-index: 1;
-    margin-bottom: 30px;
+    margin: 0 18px;
+    margin-bottom: 25px;
 }
 
 #rightSection .main:hover {
@@ -301,6 +301,7 @@ background-color:#edebef ;
 width: 100%;
 display: flex;
 margin: 50px 0;
+justify-content: center;
 }
 .bottomFlex p{
     width:33%;
@@ -333,8 +334,7 @@ margin: 50px 0;
   padding-top:8px;
 }
 .bottomFlex .lastButton{
-    width:28%;
-    
+    width:30%;  
 }
 .bottomFlex .lastButton button{
     height: 45px;

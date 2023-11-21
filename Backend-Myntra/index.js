@@ -3,7 +3,7 @@ import dotenv from "dotenv"
 import cors from 'cors'
 import mongoose from "mongoose"
 import { Login, Register, UpdateProfile, getCurrentUser } from './Controllers/User.Controller.js';
-import { SingleProduct, addComments, addProduct, addRating, allProducts, deleteYourProduct, getYourProduct, updateYourProduct } from './Controllers/Product.Controller.js';
+import { SingleProduct, addComments, addProduct, addRating, allProducts, deleteYourProduct, getYourProduct, searchProducts, updateYourProduct } from './Controllers/Product.Controller.js';
 import { Admin, checkSeller, isValidUser } from './Middlewares/All.Middlewares.js';
 import { MoveToCart, addCart, addWishlist, clearCart, deleteCartProduct, deleteWishlistProduct, getCartProducts, getWishlistProducts } from './Controllers/Buyer.controller.js';
 import { blockProduct, blockUser, getAllBuyers, getAllProducts, getAllSellers, unBlockProduct, unBlockUser, verifyProduct } from './Controllers/Admin.Controller.js';
@@ -47,6 +47,8 @@ app.patch("/block-product",Admin,blockProduct)
 app.patch("/unblock-product",Admin,unBlockProduct)
 
 app.patch("/verify-product",Admin,verifyProduct)
+
+app.get("/products",searchProducts)
 mongoose.connect(process.env.MONGO_URL)
 .then(()=>{
 console.log("Connected to DB")

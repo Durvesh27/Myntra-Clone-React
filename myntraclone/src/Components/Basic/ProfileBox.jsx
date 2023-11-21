@@ -41,7 +41,15 @@ const ProfileBox = ({ showProfile, setShowProfile }) => {
     <div>
       <div className="opacity"></div>
       <div className="profile-form">
-        <h2 style={{ textAlign: "center" }}>Profile</h2>
+        <h2 style={{ textAlign: "center",margin:"15px 0",display:"flex",justifyContent:"flex-end"}}>
+        <span>Edit Profile</span>
+        <span
+            style={{ fontSize: "18px", marginLeft: "200px" }}
+            onClick={() =>setShowProfile(!showProfile)}
+          >
+            X
+          </span>
+        </h2>
         <form onSubmit={handleSubmit}>
           <label>Change Name</label>
           <br />

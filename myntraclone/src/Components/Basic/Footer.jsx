@@ -1,9 +1,10 @@
 import React from 'react'
 import './Footer.css'
+import './Media.css'
 const Footer = () => {
   return (
 <div className="footer">
-  <div id="section">
+  <div id="section" className='fut'>
     <div id="shopping">
       <div id="space" className="first">
         <h3>ONLINE SHOPPING</h3>
