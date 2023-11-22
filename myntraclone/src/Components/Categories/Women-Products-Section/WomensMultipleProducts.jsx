@@ -32,14 +32,14 @@ const WomensMultipleProducts = () => {
         <div>
           <div className="top1">
             <p>
-              Home / Clothing / <b> Sarees</b>{" "}
+              Home / Clothing / <b className="bold-text"> Sarees</b>{" "}
             </p>
             <p>
-              <b>Sarees</b>-123939 items{" "}
+              <b className="bold-text">Sarees</b>- 8 items{" "}
             </p>
           </div>
           <div className="top2">
-            <p>FILTERS</p>
+            <p className="filters">FILTERS</p>
             <p className="clear">Clear All</p>
             <div className="drop">
               <div>

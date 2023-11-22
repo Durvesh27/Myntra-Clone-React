@@ -27,7 +27,31 @@
     padding-left: 20px;
 }
 
-.left div {
+.img1{
+    width: 48%;
+    height: 560px;
+    margin: 5px;
+    overflow: hidden;
+}
+.img2{
+    width: 48%;
+    height: 560px;
+    margin: 5px;
+    overflow: hidden;
+}
+.img3{
+    width: 48%;
+    height: 560px;
+    margin: 5px;
+    overflow: hidden;
+}
+.img4{
+    width: 48%;
+    height: 560px;
+    margin: 5px;
+    overflow: hidden;
+}
+.img5{
     width: 48%;
     height: 560px;
     margin: 5px;
@@ -654,4 +678,127 @@ color: #282c3f;
 }
 .customer>div:nth-child(10)>p:nth-child(4){
     font-size: 0.9rem;
+}
+
+/* Media */
+
+@media screen  and (max-width:1024px){
+    .left{
+        height: 1300px;
+    }
+.size>div:nth-child(5) {
+    width: 90%;
+}
+}
+@media screen  and (max-width:850px){
+    .single-main {
+flex-direction: column;
+    }
+    .left{
+        width: 100%;
+    }
+    .right{
+        width: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+}
+@media screen  and (max-width:500px){
+.img2{
+    display: none;
+}
+.img3{
+    display: none;
+}
+.img4{
+    display: none;
+}
+.img5{
+    display: none;
+}
+.left{
+    /* border: 2px solid red; */
+    height:500px;
+    display: block;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+.img1{
+    width: 100%;
+    height: 100%;
+}
+.customer>div:nth-child(10) {
+width: 100%;
+}
+.customer> div:nth-child(9)>p:nth-child(1) {
+font-size: 0.9rem;
+}
+.flex-rating {
+    width: 100%;
+}
+.fitting {
+    width: 100%;
+}
+#flex{
+    width: 100%;
+}
+.name p {
+    font-size: 1rem;
+}
+.main-Text{
+    font-size: 1.1rem;
+}
+.name span {
+font-size: 0.85rem;
+}
+.options span {
+display: none;
+}
+.addCart-btn {
+    width: 48%;
+}
+.size>div:nth-child(5) {
+    width: 100%;
+}
+.products>div:nth-child(1)>b:nth-child(1) {
+    font-size: 0.9rem;
+}
+.prod-text{
+    font-size: 13px;
+}
+#flex>div>p:nth-child(2) {
+    font-size: 0.9rem;
+}
+.ratings >div:nth-child(3) >span {
+    font-size: 0.9rem;
+}
+.options>div:nth-child(7) p {
+font-size: 14px;
+}
+.options b {
+    font-size: 0.9rem;
+}
+.customer> div:nth-child(7)>p:nth-child(1) {
+    font-size: 0.9rem;
+}
+.customer> div:nth-child(8)>p:nth-child(1) {
+    font-size: 0.9rem;
+}
+.customer> div:nth-child(9)>p:nth-child(1) {
+    font-size: 0.9rem;
+}
+.customer>div:nth-child(10)>p:nth-child(2) {
+    font-size: 0.9rem;
+}
+.customer>div:nth-child(10)>p:nth-child(3) {
+    font-size: 0.9rem;
+}
+
+.body .image1 {
+    height: 210px;
+}
+.body .image1 img {
+    width: 100%;
+    height: 100%;
+}
 }

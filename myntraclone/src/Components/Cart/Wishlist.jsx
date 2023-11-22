@@ -1,14 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './Wishlist.css'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import { Triangle } from 'react-loader-spinner'
+import { AuthContext } from '../../Context'
+import { useNavigate } from 'react-router-dom'
 const Wishlist = () => {
 const [wishlistProducts,setWishlistProducts]=useState([])
 const [updatedData,setUpdatedData]=useState(false)
 const[loading,setLoading]=useState(false)
+const {count,setCount}=useContext(AuthContext)
+const router=useNavigate()
+
 var token=JSON.parse(localStorage.getItem("Token1"))
 useEffect(()=>{
   async function getWishlistProducts(){ 
@@ -34,17 +39,24 @@ const moveToCart=async(productId)=>{
   const {data}=await axios.post("http://localhost:8001/move-to-cart",{productId,token})
   if(data.success){
   setUpdatedData(!updatedData)
+  setCount(count + 1);
   toast.success("Item moved to cart")
   }  
 }
   return (
     <>
-    {
-      loading?
+     {
+      loading? 
+      (  
+        wishlistProducts?.length===0?
+        <div className="empty-cart">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5OAXIaKeTYv80C8NF6o1tZMVw09hVTEdxHw&usqp=CAU" alt="" className="em-img"/>
+        <h3>YOUR WISHLIST IS EMPTY</h3>
+        <p className="no-text">There is nothing in your Wishlist. Let's add some items.</p>
+        <button className="ad-wish" onClick={()=>router('/mens-multiple-products')} style={{textTransform:"uppercase"}}>Continue Shopping</button>
+      </div>:
 <div className="wishlist">
   <p className="first"><b>My Wishlist</b> {wishlistProducts?.length} items</p>
-  {
-    wishlistProducts?.length? 
   <div className="wishlist-items" key={wishlistProducts?._id}>
     {
       wishlistProducts?.map((item)=>(
@@ -66,13 +78,10 @@ const moveToCart=async(productId)=>{
       ))
     }
 
-  </div>:
-  <div>
-    Add product to wishlist
   </div>
-}
-</div>:
-<div style={{height:"80vh",width:"100%",display:"flex",justifyContent:"center",alignItems:"center"}}>
+</div>
+) : 
+(<div style={{height:"80vh",width:"100%",display:"flex",justifyContent:"center",alignItems:"center"}}>
 <Triangle
   height="60"
   width="60"
@@ -82,10 +91,12 @@ const moveToCart=async(productId)=>{
   wrapperClassName=""
   visible={true}
 />
-</div>
-}
+</div>)
+     } 
 </>
-  )
+   
+   )
 }
 
-export default Wishlist
+
+export default Wishlist;

@@ -1,4 +1,4 @@
-@media (max-width:550px){
+@media screen and (max-width:1024px){
     #navbar{
         flex-direction: column;
         justify-content: space-between;
@@ -20,7 +20,7 @@
     #navi{
     width:100%;
     height:20%;
-    font-size: 10px;
+    font-size: 0.8rem;
     }
     #search{
     width:90%;
@@ -62,16 +62,15 @@
     .cart-count{
         position: absolute;
         top: -4px;
-        left: 30%;
+        left: 17%;
         width: 15px;
         height: 15px;
     }
     }
-
-    @media (max-width: 440px){
+    @media screen and (max-width: 750px){
         .cart-count{
             position: absolute;
-            left: 35%;
+            left: 22%;
             width: 14px;
             height: 14px;
         }  
@@ -134,4 +133,13 @@
             display: block;
         }
     }
+    @media screen and (max-width: 440px){
+        .cart-count{
+            position: absolute;
+            left: 35%;
+            width: 14px;
+            height: 14px;
+        }  
+    }
+
     

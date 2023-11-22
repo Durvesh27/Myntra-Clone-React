@@ -33,16 +33,16 @@ const MensMultipleProducts = ({ proCount, setProCount }) => {
     <>
       {loading ? (
         <div>
-          <div className="top1">
+          <div className="top1 bold-text">
             <p>
-              Home/Clothing/<b>Men T-Shirts</b>{" "}
+              Home/Clothing/<b className="bold-text">Men T-Shirts</b>{" "}
             </p>
             <p>
-              <b>Men T-Shirts</b>-105493 items{" "}
+              <b className="bold-text">Men T-Shirts</b>- 8 items{" "}
             </p>
           </div>
           <div className="top2">
-            <p>FILTERS</p>
+            <p className="filters">FILTERS</p>
             <div className="drop">
               <div>
                 <span>Bundles</span>
@@ -243,11 +243,11 @@ const MensMultipleProducts = ({ proCount, setProCount }) => {
                   />
                   <h4>{pro?.pri}</h4>
                   <p>{pro?.category}</p>
-                  <span className="box">
+                  {/* <span className="box">
                     <b>{pro?.rating}</b>
                     <img src={star1} alt />
                     <b>| 19.3k</b>
-                  </span>
+                  </span> */}
                   <span className="secText">
                     <strong>₹ {pro?.price1} </strong>
                     <span>

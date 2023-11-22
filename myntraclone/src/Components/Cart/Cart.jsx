@@ -14,6 +14,7 @@ const Cart = () => {
   const [num, setNum] = useState();
   const [updatedData, setUpdatedData] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [emptyPage, setEmptyPage] = useState(false);
   const { count, setCount } = useContext(AuthContext);
   const router=useNavigate()
   var token = JSON.parse(localStorage.getItem("Token1"));
@@ -108,10 +109,27 @@ const Cart = () => {
     setFinal(total);
   };
 
+// useEffect(()=>{
+// if(cart.length===0){
+// console.log("yess",cart,"cart")
+// setEmptyPage(!emptyPage)
+// }
+// },[])
+
+// console.log(cart,"out")
   const handleSize = () => {};
   return (
     <>
       {loading ? (
+        // {
+          cart?.length===0? 
+            <div className="empty-cart">
+          <img src="https://constant.myntassets.com/checkout/assets/img/empty-bag.webp" alt="" className="em-img"/>
+          <h3>Hey, it feels so light!</h3>
+          <p className="no-text">There is nothing in your bag. Let's add some items.</p>
+          <button className="ad-wish" onClick={()=>router('/wishlist')}>Add Items from Wishlist</button>
+        </div>:
+
         <div>
           <div className="section">
             <div className="cart-left">
@@ -164,7 +182,7 @@ const Cart = () => {
                   <input type="checkbox" />
                   <p>
                     &nbsp;&nbsp;
-                    <b>
+                    <b className="bold-text">
                       {cart?.length}/{cart?.length} ITEMS SELECTED
                     </b>
                   </p>
@@ -191,7 +209,7 @@ const Cart = () => {
                       <p>Sold by-{Cart?.pri} clothing</p>
                       <div className="num">
                         <button className="same">
-                          <b style={{ marginRight: "5px" }}>Qty:</b>
+                          <b style={{ marginRight: "5px" }} className="bold-text">Qty:</b>
                           <select
                             className="select-size"
                             onChange={(e) =>
@@ -204,7 +222,7 @@ const Cart = () => {
                           </select>
                         </button>
                         <button className="same">
-                          <b style={{ marginRight: "5px" }}>Size:</b>
+                          <b style={{ marginRight: "5px" }} className="bold-text">Size:</b>
                           <select className="select-size">
                             <option value="L" onChange={handleSize}>
                               L
@@ -220,12 +238,12 @@ const Cart = () => {
                         </button>
                       </div>
                       <span className="secText-cart">
-                        <strong>₹{Cart?.price1}&nbsp; </strong>
-                        <span>
+                        <strong className="bold-text">₹{Cart?.price1}&nbsp; </strong>
+                        <span className="bold-text">
                           MRP
                           <del>₹{Cart?.price2}</del>
                         </span>
-                        <b>&nbsp;({Cart?.discount}% OFF)</b>
+                        <b className="bold-text">&nbsp;({Cart?.discount}% OFF)</b>
                       </span>
                       <p
                         style={{
@@ -329,22 +347,14 @@ const Cart = () => {
                 </div>
               </div>
               <button
-                style={{
-                  width: "100%",
-                  height: 40,
-                  marginTop: 10,
-                  backgroundColor: "#ff3f6c",
-                  border: "1px solid #ff3f6c",
-                  color: "white",
-                  fontWeight: 700,
-                }}
                 onClick={clearAll}
+                className="place-btn"
               >
                 PLACE ORDER
               </button>
             </div>
           </div>
-          <div className="footer">
+          <div className="cart-footer">
             <div className="footer-section">
               <div className="footerimg">
                 <img
@@ -394,6 +404,7 @@ const Cart = () => {
             </div>
           </div>
         </div>
+        
       ) : (
         <div
           style={{

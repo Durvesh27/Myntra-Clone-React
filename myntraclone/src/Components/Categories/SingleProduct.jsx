@@ -58,34 +58,34 @@ const SingleProduct = () => {
   return (
     <div>
       <div id="text">
-        <p>
+        <p className="bold-text">
           Home/Clothing/{proData?.category}/Casuals/
-          <b>
+          <b className="bold-text">
             {proData?.pri} Wears&gt;More By {proData?.pri}
           </b>
         </p>
       </div>
       <div className="single-main">
         <div className="left">
-          <div>
+          <div className="img1 ">
+            <img src={proData?.imgsrc}  />
+          </div>
+          <div className="img2">
             <img src={proData?.imgsrc} />
           </div>
-          <div>
+          <div className="img3">
+            <img src={proData?.imgsrc}  />
+          </div>
+          <div className="img4">
             <img src={proData?.imgsrc} />
           </div>
-          <div>
-            <img src={proData?.imgsrc} />
-          </div>
-          <div>
-            <img src={proData?.imgsrc} />
-          </div>
-          <div>
+          <div className="img5">
             <img src={proData?.imgsrc} />
           </div>
         </div>
         <div className="right">
           <div className="name">
-            <h2>{proData?.pri}</h2>
+            <h2 className="main-Text">{proData?.pri}</h2>
             <p>{proData?.sec}</p>
             <span>
               <b>{proData?.rating}</b>
@@ -123,17 +123,17 @@ const SingleProduct = () => {
                 <>
                   <button className="addCart-btn">
                     <i className="fa-solid fa-bag-shopping fa-lg" />
-                    <b onClick={addTocart}>&nbsp;ADD TO BAG</b>
+                    <b onClick={addTocart} className="bold-text">&nbsp;ADD TO BAG</b>
                   </button>
-                  <button className="wish-btn">
+                  <button className="wish-btn" >
                     <i className="fa-regular fa-heart fa-lg" />
-                    <b onClick={addToWishlist}>&nbsp;WISHLIST</b>
+                    <b onClick={addToWishlist} className="bold-text">&nbsp;WISHLIST</b>
                   </button>
                 </>
               ) : (
                 <button className="addCart-btn">
                   <i class="fa-solid fa-pen"></i>
-                  <b onClick={() => setClick(!click)}>
+                  <b onClick={() => setClick(!click)} className="bold-text">
                     &nbsp;&nbsp;UPDATE PRODUCT
                   </b>
                 </button>
@@ -163,14 +163,14 @@ const SingleProduct = () => {
               <i className="fa-solid fa-tag" />
             </div>
             <div>
-              <b>Best Price:</b>
-              <b>Rs.283</b>
+              <b className="bold-text">Best Price:</b>
+              <b className="bold-text">Rs.283</b>
               <ul>
                 <li>
                   Applicable on: Orders above Rs. 599 (only on first purchase)
                 </li>
                 <li>
-                  Coupon code: <b>MYNTRA100</b>
+                  Coupon code: <b className="bold-text">MYNTRA100</b>
                 </li>
                 <li>
                   Coupon Discount: Rs. 57 off (check cart for final savings)
@@ -178,14 +178,14 @@ const SingleProduct = () => {
               </ul>
               <p>View Eligible products</p>
               <p>
-                <b>Up To Rs 500 Cashback on CRED pay transactions.</b>
+                <b className="bold-text">Up To Rs 500 Cashback on CRED pay transactions.</b>
               </p>
               <ul>
                 <li>Min Spend Rs 1,000. Available only on Android Devices.</li>
               </ul>
               <p>Terms &amp; Condition</p>
               <p>
-                <b>EMI option available</b>
+                <b className="bold-text">EMI option available</b>
               </p>
               <ul>
                 <li>EMI starting from Rs.16/month</li>
@@ -198,21 +198,21 @@ const SingleProduct = () => {
               <b>PRODUCT DETAILS&nbsp;</b>
               <i className="fa-solid fa-file-lines" />
             </div>
-            <p>
+            <p className="prod-text">
               Beige and Black printed T-shirt, has a round neck, and short
               sleeves
             </p>
             <div>
-              <b>Size and Fit</b>
-              <p>The model (height 6') is wearing a size M </p>
+              <b className="bold-text">Size and Fit</b>
+              <p className="prod-text">The model (height 6') is wearing a size M </p>
             </div>
             <div>
-              <b>Material &amp; Care</b>
-              <p>Material: 52% Cotton 48% Polyester</p>
-              <p>Machine Wash</p>
+              <b className="bold-text">Material &amp; Care</b>
+              <p className="prod-text">Material: 52% Cotton 48% Polyester</p>
+              <p className="prod-text">Machine Wash</p>
             </div>
             <div>
-              <b>Specifications</b>
+              <b className="bold-text">Specifications</b>
               <div id="flex">
                 <div>
                   <p>Fabric</p>
@@ -224,7 +224,7 @@ const SingleProduct = () => {
                 </div>
                 <div>
                   <p>Main Trend</p>
-                  <p>Typography or Slogan Print</p>
+                  <p>Slogan Print</p>
                 </div>
                 <div>
                   <p>Neck</p>
@@ -252,7 +252,7 @@ const SingleProduct = () => {
           </div>
           <div className="ratings">
             <div>
-              <b>RATINGS</b>
+              <b className="bold-text">RATINGS</b>
               <i className="fa-regular fa-star" />
             </div>
             <div className="flex-rating">
@@ -377,13 +377,13 @@ const SingleProduct = () => {
             <div>
               <p>View all 1434 reviews</p>
               <p>
-                Product Code: <b>11148764</b>
+                Product Code: <b className="bold-text">11148764</b>
               </p>
               <p style={{ textTransform: "uppercase" }}>
-                Seller:&nbsp;<b>{proData?.pri} CLOTHING PRIVATE LIMITED</b>
+                Seller:&nbsp;<b className="bold-text">{proData?.pri} CLOTHING PRIVATE LIMITED</b>
               </p>
               <p>
-                <b>View Supplier Information</b>
+                <b className="bold-text">View Supplier Information</b>
               </p>
             </div>
           </div>

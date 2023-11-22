@@ -347,3 +347,63 @@ margin-left: 40px;
 .bottomFlex .lastButton button:hover{
 border:1px solid black;
 }
+
+/* Media Queries */
+@media screen and (max-width:1025px){
+.filters,.top2 .drop,.drop-option,.clear{
+display: none;
+}
+.top1{
+    margin-bottom: 0;
+}
+#leftSection{
+    display: none;
+}
+#rightSection {
+    width: 100%;
+}
+#rightSection .main {
+    width: 21%;
+    height: 20%;
+}
+#rightSection .box {
+    top: 230px;
+    left: 10px;
+}
+.bottomFlex .lastButton button {
+height: 40px;
+padding: 10px;
+}
+}
+
+@media only screen and (max-width: 480px) {
+    #rightSection .main {
+        width: 40%;
+    }
+    #rightSection .box {
+        top: 180px;
+        left: 10px;
+    }
+    /* texts */
+    #rightSection>div>h4:nth-child(2) {
+     font-size: 14px;
+     margin-left: 0;
+    }
+    #rightSection>div>p:nth-child(3) {
+        font-size: 12px;
+     margin-left: 0;
+     margin-bottom: 0;
+    }
+    #rightSection .secText {
+        margin-left: 0px;
+    }
+    #rightSection .secText >strong ,span,b{
+        font-size: 11px;
+    }
+    .bottomFlex .lastButton {
+        width: 104%;
+    }
+    .bold-text{
+        font-size: 13px;
+    }
+  }
