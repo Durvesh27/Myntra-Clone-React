@@ -364,26 +364,37 @@ display: none;
 }
 #rightSection .main {
     width: 21%;
-    height: 20%;
-}
-#rightSection .box {
-    top: 230px;
-    left: 10px;
+    /* height: 20%; */
 }
 .bottomFlex .lastButton button {
 height: 40px;
 padding: 10px;
 }
+#rightSection .box {
+    display: none;
+        }
+
+        #rightSection>div:hover {
+            .container {
+display: none;
+            }
+        
+        }
 }
 
 @media only screen and (max-width: 480px) {
+    #rightSection {
+       padding: 0;
+       justify-content: space-between;
+    }
     #rightSection .main {
-        width: 40%;
+        width: 49%;
+        margin-left: 0;
+        margin-right: 0;
+        margin-bottom: 20px;
+        padding-bottom: 5px;
     }
-    #rightSection .box {
-        top: 180px;
-        left: 10px;
-    }
+
     /* texts */
     #rightSection>div>h4:nth-child(2) {
      font-size: 14px;
@@ -405,5 +416,8 @@ padding: 10px;
     }
     .bold-text{
         font-size: 13px;
+    }
+    #rightSection .secText b {
+        font-size: 11px;
     }
   }

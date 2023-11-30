@@ -44,30 +44,32 @@ const UpdateProduct = ({ id, setProData, click, setClick }) => {
   return (
     <div>
       <div
-        style={{
-          background: "rgba(0,0,0,0.5)",
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          zIndex: 99,
-        }}
+      className="opacity"
+        // style={{
+        //   background: "rgba(0,0,0,0.5)",
+        //   position: "fixed",
+        //   top: 0,
+        //   left: 0,
+        //   width: "100%",
+        //   height: "100%",
+        //   zIndex: 99,
+        // }}
       ></div>
       <div
-        style={{
-          width: "30%",
-          lineHeight: "30px",
-          position: "fixed",
-          top: "130px",
-          left: "510px",
-          padding: "20px",
-          zIndex: 999,
-          background: "white",
-        }}
+        // style={{
+        //   width: "30%",
+        //   lineHeight: "30px",
+        //   position: "fixed",
+        //   top: "130px",
+        //   left: "510px",
+        //   padding: "20px",
+        //   zIndex: 999,
+        //   background: "white",
+        // }}
+        className="add-product"
       >
-        <h2 style={{marginBottom:"15px"}}>
-          Update Product{" "}
+        <h2 className="add-title">
+          <span style={{fontSize:"18px"}}>Update Product</span>
           <span
             style={{ fontSize: "18px", marginLeft: "250px" }}
             onClick={() => setClick(!click)}

@@ -13,6 +13,7 @@ const SingleProduct = () => {
   const [proData, setProData] = useState();
   const [click, setClick] = useState(false);
   const { state, count, setCount } = useContext(AuthContext);
+
   useEffect(() => {
     async function viewProduct() {
       const { data } = await axios.post(
@@ -259,7 +260,7 @@ const SingleProduct = () => {
               <div>
                 <span>4</span>
                 <img src={star1} alt="" />
-                <p>19.4k Verified Buyers</p>
+                <p className="mult-txt">19.4k Verified Buyers</p>
               </div>
               <div />
               {/* linings */}

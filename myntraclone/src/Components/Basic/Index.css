@@ -129,12 +129,13 @@ input[type="search"]::-webkit-search-cancel-button {
     
 }
 .plus-i{
-    margin-top: 20px;
+    /* margin-top: 20px; */
     margin-left: 40px;
-    margin-right: 20px;
+    /* margin-right: 20px; */
 }
+
 #add{
-margin-top: 15px;
+margin-top: 27px;
 }
 #wishlist {
     width: 30%;

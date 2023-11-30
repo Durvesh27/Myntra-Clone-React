@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Seller.css";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import axios from "axios";
+import { AuthContext } from "../../Context";
 const AddProduct = ({showAdd,setShowAdd}) => {
   const [addPro, setAddPro] = useState({
     pri: "",
@@ -13,6 +14,7 @@ const AddProduct = ({showAdd,setShowAdd}) => {
     category: "Men Clothing",
     imgsrc: "",
   });
+  const {productsUpdated,setProductsUpdated}=useContext(AuthContext)
   function handleChange(e) {
     setAddPro({ ...addPro, [e.target.name]: e.target.value });
   }
@@ -42,6 +44,7 @@ const AddProduct = ({showAdd,setShowAdd}) => {
         })
         toast.success("Product added");
         setShowAdd(!showAdd)
+        setProductsUpdated(!productsUpdated)
       }
     }
   }
@@ -50,9 +53,9 @@ const AddProduct = ({showAdd,setShowAdd}) => {
       <div className="opacity"></div>
       <div className="add-product">
         <h2 className="add-title">
-          Add product{" "}
+          <span style={{fontSize:"18px"}}>Add product</span>
           <span
-            style={{ fontSize: "18px", marginLeft: "350px" }}
+            className="x-mark"
             onClick={() => setShowAdd(!showAdd)}
           >
             X

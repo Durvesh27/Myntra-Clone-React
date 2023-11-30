@@ -6,11 +6,14 @@ import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
 import { ColorRing } from "react-loader-spinner";
+import { useContext } from "react";
+import { AuthContext } from "../../../Context";
 const WomensMultipleProducts = () => {
   const [WomensData, setWomensData] = useState([]);
   const [loading, setLoading] = useState(false);
   const router = useNavigate();
   const [page, setPage] = useState(1);
+  const {productsUpdated}=useContext(AuthContext)
 
   useEffect(() => {
     async function MensProducts() {
@@ -25,7 +28,14 @@ const WomensMultipleProducts = () => {
       }
     }
     MensProducts();
-  }, [WomensData]);
+  }, [page,productsUpdated]);
+
+  useEffect(()=>{
+    if(WomensData.length==0){
+    setPage(1)
+    }
+    },[WomensData])
+
   return (
     <>
       {loading ? (
@@ -236,7 +246,7 @@ const WomensMultipleProducts = () => {
             </div>
 
             <div id="rightSection">
-              {WomensData.map((WomensData) => (
+              {WomensData && WomensData.map((WomensData) => (
                 <div className="main">
                   <img
                     src={WomensData?.imgsrc}
@@ -290,14 +300,15 @@ const WomensMultipleProducts = () => {
           <li>9</li>
           <li>10</li>
         </ul> */}
-                <div className="lastButton">
-                  {page < 5 ? (
-                    <button onClick={() => setPage(page + 5)}>NEXT &gt;</button>
-                  ) : (
-                    <button onClick={() => setPage(page - 5)}>
-                      PREVIOUS &gt;
-                    </button>
-                  )}
+                 <div className="lastButton">
+                  {
+                    page===1? 
+                  <button onClick={() => setPage(page + 5)}>NEXT </button>:
+                  <>
+                  <button onClick={() => setPage(page + 5)}>NEXT </button>
+                  <button onClick={() => setPage(page - 5)}>PREV </button>
+                  </>
+                  }
                 </div>
               </div>
             </div>

@@ -10,16 +10,18 @@ import toast from "react-hot-toast";
 
 const Profile = () => {
   const [showProfile, setShowProfile] = useState(false);
-  const { state } = useContext(AuthContext);
+  const { state,logout} = useContext(AuthContext);
   const [loading,setLoading]=useState(false)
   const router=useNavigate()
+
   useEffect(()=>{
-    if(state.user){
+    if(state){
     setLoading(true)
     }else{
       return router('/')
     }
   },[state])
+
   return (
     <div>
       {
@@ -61,7 +63,7 @@ loading?
               </div>
             </div>
             <div className="profile-right">
-              <p className="fs-18 fw-600 bb ptb-20 pl-20 mb-30">
+              <p className="fs-18 fw-600 bb ptb-20 pl-20 mb-30 profDet">
                 Profile Details{" "}
                 <span
                   style={{
@@ -98,6 +100,11 @@ loading?
               </ul>
             </div>
           </div>
+          {
+            state?.user?
+          <p className="sm-user" onClick={logout}>Logout</p>
+         : <p className="sm-user"onClick={()=>router('/login')}>Login</p>
+          }
         </div>
       </div>:
 <div style={{height:"80vh",width:"100%",display:"flex",justifyContent:"center",alignItems:"center"}}>

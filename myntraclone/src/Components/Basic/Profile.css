@@ -2,8 +2,7 @@
     width:100%;
 }
 .profile{
-    max-width: 61%;
-   
+    width: 61%;
     margin: auto;
     margin-top: 70px;
     
@@ -93,4 +92,40 @@ width:50%;
     top: 130px;
     left: 510px;
     z-index: 999;
+}
+.sm-user{
+    display: block;
+    margin: 12px;
+    font-weight: 550;
+    font-size: 14px;
+    color: #FF3E6C;
+}
+/* Media */
+
+@media screen and (max-width:1024px){
+.profile-left{
+display: none;
+}  
+
+}
+@media screen and (max-width:750px){
+    .profile{
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    }
+    .profile-right{
+        width: 100%;
+        padding: 0;
+        border: none;
+        margin-left: 0;
+    }
+    .profDet{
+        display: none;
+    }
+}
+@media screen and (max-width: 440px){
+.profile-right{
+    font-size: 13px;
+}
 }

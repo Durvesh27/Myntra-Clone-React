@@ -1,17 +1,19 @@
 import React, { useEffect } from "react";
 import "./../../Categories/MultipleProduct.css";
-import MensData from "./MensProData";
-import star1 from "./../../Images/star.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-
 import { ColorRing } from "react-loader-spinner";
-const MensMultipleProducts = ({ proCount, setProCount }) => {
+import { useContext } from "react";
+import { AuthContext } from "../../../Context";
+import star1 from "./../../Images/star.png";
+
+const MensMultipleProducts = () => {
   const [products, setProducts] = useState([]);
-  const [myData, setMyData] = useState(false);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
+  const router = useNavigate();
+  const {productsUpdated}=useContext(AuthContext)
 
   useEffect(() => {
     async function MensProducts() {
@@ -26,10 +28,15 @@ const MensMultipleProducts = ({ proCount, setProCount }) => {
       }
     }
     MensProducts();
-  }, [products.length, page]);
+  },[page,productsUpdated]);
 
-  const router = useNavigate();
-  return (
+  useEffect(()=>{
+  if(products.length==0){
+  setPage(1)
+  }
+  },[products])
+
+  return(
     <>
       {loading ? (
         <div>
@@ -235,7 +242,7 @@ const MensMultipleProducts = ({ proCount, setProCount }) => {
               </div>
             </div>
             <div id="rightSection">
-              {products.map((pro) => (
+              {products && products.map((pro) => (
                 <div className="main">
                   <img
                     src={pro?.imgsrc}
@@ -243,11 +250,11 @@ const MensMultipleProducts = ({ proCount, setProCount }) => {
                   />
                   <h4>{pro?.pri}</h4>
                   <p>{pro?.category}</p>
-                  {/* <span className="box">
+                  <span className="box">
                     <b>{pro?.rating}</b>
                     <img src={star1} alt />
                     <b>| 19.3k</b>
-                  </span> */}
+                  </span>
                   <span className="secText">
                     <strong>₹ {pro?.price1} </strong>
                     <span>
@@ -290,9 +297,12 @@ const MensMultipleProducts = ({ proCount, setProCount }) => {
             </ul> */}
                 <div className="lastButton">
                   {
-                    page<5? 
-                  <button onClick={() => setPage(page + 5)}>NEXT &gt;</button>:
-                  <button onClick={() => setPage(page - 5)}>PREVIOUS &gt;</button>
+                    page===1? 
+                  <button onClick={() => setPage(page + 5)}>NEXT </button>:
+                  <>
+                  <button onClick={() => setPage(page + 5)}>NEXT </button>
+                  <button onClick={() => setPage(page - 5)}>PREV </button>
+                  </>
                   }
                 </div>
               </div>

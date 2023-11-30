@@ -21,6 +21,7 @@ return state
 const AuthProvider=({children})=>{
 const[state,dispatch]=useReducer(reducer,initialValue)
 const[count,setCount]=useState(0)
+const[productsUpdated,setProductsUpdated]=useState(false)
 
 function login(activeUser){
 dispatch({
@@ -67,7 +68,7 @@ useEffect(() => {
   }, [])
 
 return(
-<AuthContext.Provider value={{state,login,logout,count,setCount}}>
+<AuthContext.Provider value={{state,login,logout,count,setCount,productsUpdated,setProductsUpdated}}>
     {children}
 </AuthContext.Provider>
 )

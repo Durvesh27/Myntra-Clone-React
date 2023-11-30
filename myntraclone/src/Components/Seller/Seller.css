@@ -20,6 +20,8 @@ z-index: 999;
 .add-title{
     text-align: center;
     margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
 }
 .add-input{
     width: 100%;
@@ -40,3 +42,38 @@ display: block;
 margin: auto;
 margin-top: 10px;
 }
+.x-mark{
+    font-size: 18px;
+    }
+
+@media screen and (max-width:1024px){
+    .add-product {
+        width: 50%;
+        top: 50px;
+        left: 232px;
+    }
+}
+@media screen and (max-width:750px){
+    .add-product {
+        width: 80%;
+        top: 30px;
+        left: 62px;
+    }
+}
+@media screen and (max-width:550px){
+    .add-product {
+        width: 100%;
+        top: 0px;
+        left: 0px;
+        height: 100vh;
+        box-sizing: border-box;
+    }
+    .add-input {
+        font-size: 13px;
+    }
+    .add-btn {
+        font-size: 13px;
+
+    }
+}
+

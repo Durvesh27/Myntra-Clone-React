@@ -71,7 +71,7 @@ const Register = () => {
         />
         <div className="second">
           <div>
-            <b>Sign-up</b>
+            <b style={{fontSize:"1rem"}}>Sign-up</b>
           </div>
 
           <form onSubmit={handleSubmit}>
@@ -108,15 +108,15 @@ const Register = () => {
               onChange={handleChange}
             />
             <p style={{ fontSize: "14px" }}>
-              By continuing,i agree to the <b>Terms of use</b> &amp;{" "}
-              <b>Privacy policy</b>{" "}
+              By continuing,i agree to the <b style={{ fontSize: "14px" }}>Terms of use</b> &amp;{" "}
+              <b style={{ fontSize: "14px" }}>Privacy policy</b>{" "}
             </p>
             <input type="submit" value="CONTINUE" className="submit-btn" />
           </form>
 
           <p style={{ fontSize: "14px" }}>
             Already have an account{" "}
-            <b onClick={() => router("/register")}>LOGIN</b>{" "}
+            <b onClick={() => router("/login")} style={{ fontSize: "14px" }}>LOGIN</b>{" "}
           </p>
         </div>
       </div>

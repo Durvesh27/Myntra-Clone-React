@@ -97,6 +97,4 @@ const moveToCart=async(productId)=>{
    
    )
 }
-
-
 export default Wishlist;

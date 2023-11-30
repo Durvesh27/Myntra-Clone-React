@@ -168,6 +168,7 @@ const Navbar = () => {
           </>
         )}
       </div>
+      
       {showAdd && <AddProduct showAdd={showAdd} setShowAdd={setShowAdd} />}
     </div>
   );
