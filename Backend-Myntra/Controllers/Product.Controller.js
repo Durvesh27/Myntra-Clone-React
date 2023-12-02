@@ -36,9 +36,6 @@ export const addProduct = async (req, res) => {
 
 export const allProducts = async (req, res) => {
   try {
-    // const {page,limit=5,category}=req.body;
-    // const skip=(parseInt(page)-1)-parseInt(limit)
-    // const limitValue=parseInt(limit)
     const products = await ProductModal.find({
       isBlocked: false,
       isVerified: false,

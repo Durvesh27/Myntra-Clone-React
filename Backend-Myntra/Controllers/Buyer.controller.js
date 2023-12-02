@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import UserModal from "../Modals/User.Modal.js";
 import ProductModal from "../Modals/Product.Modal.js";
+
 export const addCart = async (req, res) => {
   try {
     const { token, productId } = req.body;

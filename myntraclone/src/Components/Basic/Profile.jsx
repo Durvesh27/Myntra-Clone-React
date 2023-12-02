@@ -6,7 +6,7 @@ import { AuthContext } from "../../Context";
 import { Triangle } from "react-loader-spinner";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+
 
 const Profile = () => {
   const [showProfile, setShowProfile] = useState(false);

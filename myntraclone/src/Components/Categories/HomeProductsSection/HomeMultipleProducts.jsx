@@ -1,9 +1,56 @@
-import React from 'react'
-import HomeData from "./HomeProData";
-import star1 from './../../Images/star.png'
+import React, { useEffect } from "react";
+import "./../../Categories/MultipleProduct.css";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
+import { ColorRing } from "react-loader-spinner";
+import { useContext } from "react";
+import { AuthContext } from "../../../Context";
+import star1 from "./../../Images/star.png";
+import toast from "react-hot-toast";
 const HomeMultipleProducts = () => {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const router = useNavigate();
+  const {productsUpdated}=useContext(AuthContext)
+
+  useEffect(() => {
+    async function MensProducts() {
+      const response = await axios.get("http://localhost:8001/all-products");
+      if (response.data.success) {
+        setProducts(
+          response.data.products
+            .filter((item) => item.category === "Home Appliances")
+            .slice(page-1, page + 4)
+        );
+        setLoading(true);
+      }
+    }
+    MensProducts();
+  },[page,productsUpdated]);
+
+  useEffect(()=>{
+  if(products.length==0){
+  setPage(1)
+  }
+  },[products])
+  const addToWishlist = async (proData) => {
+    const productId = proData._id;
+    const token = JSON.parse(localStorage.getItem("Token1"));
+    const { data } = await axios.post("http://localhost:8001/add-wishlist", {
+      productId,
+      token,
+    });
+    if (data.success) {
+      toast.success("Item added to Wishlist");
+    }
+  };
   return (
-<div>
+    <>
+    {
+      loading?
+      <div>
   <div className="top1">
     <p>Home /<b> Bedding Sets</b> </p>
     <p><b>Bedding Sets</b>-2555 items </p>
@@ -134,11 +181,13 @@ const HomeMultipleProducts = () => {
     </div>
     <div id="rightSection">
       {
-        HomeData.map((pro)=>(
+      products && products.map((pro)=>(
 
     
       <div className="main">
-        <img src={pro?.imgsrc} alt="" />
+        <img src={pro?.imgsrc} alt="" 
+        onClick={() => router(`/single-product/${pro?._id}`)}
+        />
         <h4>{pro?.pri}</h4>
         <p>{pro?.category}</p>
         <span className="box">
@@ -154,7 +203,7 @@ const HomeMultipleProducts = () => {
           <b>({pro?.discount}% OFF)</b>
         </span>
         <div className="container">
-          <button>
+          <button onClick={()=>addToWishlist(pro)}>
             WISHLIST
             <i className="fa-regular fa-heart" />
           </button>
@@ -172,7 +221,7 @@ const HomeMultipleProducts = () => {
         }
       <div className="downline" />
       <div className="bottomFlex">
-        <p>Page 1 of 1831</p>
+        {/* <p>Page 1 of 1831</p>
         <ul className="nextPage">
           <li>1</li>
           <li>2</li>
@@ -184,16 +233,43 @@ const HomeMultipleProducts = () => {
           <li>8</li>
           <li>9</li>
           <li>10</li>
-        </ul>
-        <div className="lastButton">
-          <button>
-            NEXT &gt;
-          </button>
-        </div>
+        </ul> */}
+       <div className="lastButton">
+                  {
+                    page===1? 
+                  <button onClick={() => setPage(page + 5)}>NEXT </button>:
+                  <>
+                  <button onClick={() => setPage(page + 5)}>NEXT </button>
+                  <button onClick={() => setPage(page - 5)}>PREV </button>
+                  </>
+                  }
+                </div>
       </div>
     </div>
-  </div></div>
+  </div>
+  </div>:
+   <div
+   style={{
+     height: "80vh",
+     width: "100%",
+     display: "flex",
+     justifyContent: "center",
+     alignItems: "center",
+   }}
+ >
+   <ColorRing
+     visible={true}
+     height="50"
+     width="50"
+     ariaLabel="blocks-loading"
+     wrapperStyle={{}}
+     wrapperClass="blocks-wrapper"
+     colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+   />
+ </div>
+    }
 
+  </>
   )
 }
 

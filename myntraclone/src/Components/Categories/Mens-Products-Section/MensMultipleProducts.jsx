@@ -7,6 +7,7 @@ import { ColorRing } from "react-loader-spinner";
 import { useContext } from "react";
 import { AuthContext } from "../../../Context";
 import star1 from "./../../Images/star.png";
+import toast from "react-hot-toast";
 
 const MensMultipleProducts = () => {
   const [products, setProducts] = useState([]);
@@ -16,7 +17,7 @@ const MensMultipleProducts = () => {
   const {productsUpdated}=useContext(AuthContext)
 
   useEffect(() => {
-    async function MensProducts() {
+    async function getProducts() {
       const response = await axios.get("http://localhost:8001/all-products");
       if (response.data.success) {
         setProducts(
@@ -27,7 +28,7 @@ const MensMultipleProducts = () => {
         setLoading(true);
       }
     }
-    MensProducts();
+    getProducts();
   },[page,productsUpdated]);
 
   useEffect(()=>{
@@ -35,6 +36,18 @@ const MensMultipleProducts = () => {
   setPage(1)
   }
   },[products])
+
+  const addToWishlist = async (proData) => {
+    const productId = proData._id;
+    const token = JSON.parse(localStorage.getItem("Token1"));
+    const { data } = await axios.post("http://localhost:8001/add-wishlist", {
+      productId,
+      token,
+    });
+    if (data.success) {
+      toast.success("Item added to Wishlist");
+    }
+  };
 
   return(
     <>
@@ -264,7 +277,7 @@ const MensMultipleProducts = () => {
                     <b>({pro?.discount}% OFF)</b>
                   </span>
                   <div className="container">
-                    <button>
+                    <button onClick={()=>addToWishlist(pro)}>
                       WISHLIST
                       <i className="fa-regular fa-heart" />
                     </button>

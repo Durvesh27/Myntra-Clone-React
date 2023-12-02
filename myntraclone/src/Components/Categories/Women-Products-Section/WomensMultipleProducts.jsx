@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { ColorRing } from "react-loader-spinner";
 import { useContext } from "react";
 import { AuthContext } from "../../../Context";
+import toast from "react-hot-toast";
 const WomensMultipleProducts = () => {
   const [WomensData, setWomensData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -16,7 +17,7 @@ const WomensMultipleProducts = () => {
   const {productsUpdated}=useContext(AuthContext)
 
   useEffect(() => {
-    async function MensProducts() {
+    async function getProducts() {
       const response = await axios.get("http://localhost:8001/all-products");
       if (response.data.success) {
         setWomensData(
@@ -27,7 +28,7 @@ const WomensMultipleProducts = () => {
         setLoading(true);
       }
     }
-    MensProducts();
+    getProducts();
   }, [page,productsUpdated]);
 
   useEffect(()=>{
@@ -36,6 +37,17 @@ const WomensMultipleProducts = () => {
     }
     },[WomensData])
 
+    const addToWishlist = async (proData) => {
+      const productId = proData._id;
+      const token = JSON.parse(localStorage.getItem("Token1"));
+      const { data } = await axios.post("http://localhost:8001/add-wishlist", {
+        productId,
+        token,
+      });
+      if (data.success) {
+        toast.success("Item added to Wishlist");
+      }
+    };
   return (
     <>
       {loading ? (
@@ -269,7 +281,7 @@ const WomensMultipleProducts = () => {
                     <b>({WomensData?.discount}% OFF)</b>
                   </span>
                   <div className="container">
-                    <button>
+                    <button onClick={()=>addToWishlist(WomensData)}>
                       WISHLIST
                       <i className="fa-regular fa-heart" />
                     </button>
