@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/static/css/main.170d6d2e.css",
-    "main.js": "/static/js/main.01487469.js",
+    "main.js": "/static/js/main.cee812f9.js",
     "static/media/myntraLOGO.webp": "/static/media/myntraLOGO.176b5a0a445d7b4ff25d.webp",
     "index.html": "/index.html",
     "main.170d6d2e.css.map": "/static/css/main.170d6d2e.css.map",
-    "main.01487469.js.map": "/static/js/main.01487469.js.map"
+    "main.cee812f9.js.map": "/static/js/main.cee812f9.js.map"
   },
   "entrypoints": [
     "static/css/main.170d6d2e.css",
-    "static/js/main.01487469.js"
+    "static/js/main.cee812f9.js"
   ]
 }
