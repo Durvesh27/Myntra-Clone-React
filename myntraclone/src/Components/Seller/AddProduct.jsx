@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import "./Seller.css";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import axios from "axios";
 import { AuthContext } from "../../Context";
-const AddProduct = ({showAdd,setShowAdd}) => {
+import api from "../Api Config";
+const AddProduct = ({ showAdd, setShowAdd }) => {
   const [addPro, setAddPro] = useState({
     pri: "",
     sec: "",
@@ -14,7 +14,7 @@ const AddProduct = ({showAdd,setShowAdd}) => {
     category: "Men Clothing",
     imgsrc: "",
   });
-  const {productsUpdated,setProductsUpdated}=useContext(AuthContext)
+  const { productsUpdated, setProductsUpdated } = useContext(AuthContext);
   function handleChange(e) {
     setAddPro({ ...addPro, [e.target.name]: e.target.value });
   }
@@ -31,20 +31,20 @@ const AddProduct = ({showAdd,setShowAdd}) => {
       addPro.imgsrc
     ) {
       const token = JSON.parse(localStorage.getItem("Token1"));
-      const response = await axios.post("http://localhost:8001/addProduct",{token, addPro });
+      const response = await api.post("/seller/addProduct", { token, addPro });
       if (response.data.success) {
         setAddPro({
-          pri:"",
-          sec:"",
-          price1:"",
-          price2:"",
-          discount:"",
-          category:"",
-          imgsrc:""
-        })
+          pri: "",
+          sec: "",
+          price1: "",
+          price2: "",
+          discount: "",
+          category: "",
+          imgsrc: "",
+        });
         toast.success("Product added");
-        setShowAdd(!showAdd)
-        setProductsUpdated(!productsUpdated)
+        setShowAdd(!showAdd);
+        setProductsUpdated(!productsUpdated);
       }
     }
   }
@@ -53,11 +53,8 @@ const AddProduct = ({showAdd,setShowAdd}) => {
       <div className="opacity"></div>
       <div className="add-product">
         <h2 className="add-title">
-          <span style={{fontSize:"18px"}}>Add product</span>
-          <span
-            className="x-mark"
-            onClick={() => setShowAdd(!showAdd)}
-          >
+          <span style={{ fontSize: "18px" }}>Add product</span>
+          <span className="x-mark" onClick={() => setShowAdd(!showAdd)}>
             X
           </span>
         </h2>
@@ -111,7 +108,7 @@ const AddProduct = ({showAdd,setShowAdd}) => {
             name="imgsrc"
             onChange={handleChange}
           />
-          <input type="submit" value="Add Product" className="add-btn"  />
+          <input type="submit" value="Add Product" className="add-btn" />
         </form>
       </div>
     </div>

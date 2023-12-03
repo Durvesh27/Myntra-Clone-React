@@ -7,8 +7,8 @@ import { AuthContext } from "../../Context";
 import { useEffect } from "react";
 import AddProduct from "../Seller/AddProduct";
 import toast from "react-hot-toast";
-import './Media.css'
-import axios from "axios";
+import "./Media.css";
+import api from "../Api Config";
 const Navbar = () => {
   const router = useNavigate();
   const [logged, setLogged] = useState(false);
@@ -28,33 +28,28 @@ const Navbar = () => {
 
   const handleSearch = async () => {
     try {
-      if(search.length){
-        const response = await axios.get(
-          `http://localhost:8001/products?search=${search}`
-        );
+      if (search.length) {
+        const response = await api.get(`/buyer/products?search=${search}`);
         if (response.data.success) {
           setSearchResult(response.data.products);
         }
       }
-     
     } catch (error) {
       toast.error("Failed to load search result");
     }
   };
 
+  useEffect(() => {
+    handleSearch();
+    if (!search.length) {
+      setSearchResult([]);
+    }
+  }, [search]);
 
-   useEffect(()=>{
-    handleSearch()
-   if(!search.length){
-    setSearchResult([])
-   }
-   },[search])
-
-
-   const handleRedirect=(id)=>{
-    router(`single-product/${id}`)
-    window.location.reload()
-   }
+  const handleRedirect = (id) => {
+    router(`single-product/${id}`);
+    window.location.reload();
+  };
   return (
     <div id="navbar">
       <div id="icon">
@@ -75,15 +70,21 @@ const Navbar = () => {
           type="search"
           placeholder="Search for products,brands and more"
           value={search}
-          onChange={(e)=>setSearch(e.target.value)}
-          style={{backgroundColor:search.length? "white" :"#F5F5F6"}}
+          onChange={(e) => setSearch(e.target.value)}
+          style={{ backgroundColor: search.length ? "white" : "#F5F5F6" }}
         />
 
         <div className="search-query">
-          {searchResult && searchResult.map((item) => 
-          <div key={item?._id} className="search-query-item" onClick={()=>handleRedirect(item._id)}>
-          {item?.pri}
-          </div>)}
+          {searchResult &&
+            searchResult.map((item) => (
+              <div
+                key={item?._id}
+                className="search-query-item"
+                onClick={() => handleRedirect(item._id)}
+              >
+                {item?.pri}
+              </div>
+            ))}
         </div>
       </div>
 
@@ -103,8 +104,13 @@ const Navbar = () => {
                   </span>
                 </p>
               )}
-
-              <button onClick={() => router("/login")}>LOGIN / SIGN UP</button>
+              {logged ? (
+                <button onClick={logout}>LOGOUT</button>
+              ) : (
+                <button onClick={() => router("/login")}>
+                  LOGIN / SIGN UP
+                </button>
+              )}
             </div>
             <ul>
               <li>Orders</li>
@@ -121,10 +127,7 @@ const Navbar = () => {
               <li>Saved Address</li>
             </ul>
             <div className="login-sec-div">
-              <p onClick={() => router("/profile")}>Edit profile</p>
-              <p onClick={logout} style={{ marginBottom: "5px" }}>
-                Logout
-              </p>
+              {logged && <p onClick={() => router("/profile")}>Edit profile</p>}
             </div>
           </div>
         </div>
@@ -168,7 +171,7 @@ const Navbar = () => {
           </>
         )}
       </div>
-      
+
       {showAdd && <AddProduct showAdd={showAdd} setShowAdd={setShowAdd} />}
     </div>
   );

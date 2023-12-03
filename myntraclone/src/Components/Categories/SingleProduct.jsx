@@ -7,7 +7,7 @@ import UpdateProduct from "../Seller/UpdateProduct";
 import { useContext } from "react";
 import { AuthContext } from "../../Context";
 import { toast } from "react-hot-toast";
-import axios from "axios";
+import api from "../Api Config";
 const SingleProduct = () => {
   const { userId } = useParams();
   const [proData, setProData] = useState();
@@ -16,10 +16,7 @@ const SingleProduct = () => {
 
   useEffect(() => {
     async function viewProduct() {
-      const { data } = await axios.post(
-        "http://localhost:8001/single-product",
-        { userId }
-      );
+      const { data } = await api.post("/all/single-product", { userId });
       if (data.success) {
         setProData(data.productData);
       }
@@ -27,34 +24,38 @@ const SingleProduct = () => {
     viewProduct();
   }, []);
 
-
-
   const addTocart = async () => {
     const productId = proData._id;
     const token = JSON.parse(localStorage.getItem("Token1"));
-    const { data } = await axios.post("http://localhost:8001/add-cart", {
-      productId,
-      token,
-    });
-    if (data.success) {
-      setCount(count + 1);
-      toast.success("Item added to cart");
+    if (token) {
+      const { data } = await api.post("/buyer/add-cart", {
+        productId,
+        token,
+      });
+      if (data.success) {
+        setCount(count + 1);
+        toast.success("Item added to cart");
+      }
+    } else {
+      toast("Please Login");
     }
   };
 
   const addToWishlist = async () => {
     const productId = proData._id;
     const token = JSON.parse(localStorage.getItem("Token1"));
-    const { data } = await axios.post("http://localhost:8001/add-wishlist", {
-      productId,
-      token,
-    });
-    if (data.success) {
-      toast.success("Item added to Wishlist");
+    if (token) {
+      const { data } = await api.post("/buyer/add-wishlist", {
+        productId,
+        token,
+      });
+      if (data.success) {
+        toast.success("Item added to Wishlist");
+      }
+    } else {
+      toast("Please Login");
     }
   };
-
-
 
   return (
     <div>
@@ -69,13 +70,13 @@ const SingleProduct = () => {
       <div className="single-main">
         <div className="left">
           <div className="img1 ">
-            <img src={proData?.imgsrc}  />
+            <img src={proData?.imgsrc} />
           </div>
           <div className="img2">
             <img src={proData?.imgsrc} />
           </div>
           <div className="img3">
-            <img src={proData?.imgsrc}  />
+            <img src={proData?.imgsrc} />
           </div>
           <div className="img4">
             <img src={proData?.imgsrc} />
@@ -120,24 +121,28 @@ const SingleProduct = () => {
             )}
 
             <div>
-              {state?.user?.role === "Buyer" ? (
-                <>
-                  <button className="addCart-btn">
-                    <i className="fa-solid fa-bag-shopping fa-lg" />
-                    <b onClick={addTocart} className="bold-text">&nbsp;ADD TO BAG</b>
-                  </button>
-                  <button className="wish-btn" >
-                    <i className="fa-regular fa-heart fa-lg" />
-                    <b onClick={addToWishlist} className="bold-text">&nbsp;WISHLIST</b>
-                  </button>
-                </>
-              ) : (
+              {state?.user?.role === "Seller" ? (
                 <button className="addCart-btn">
                   <i class="fa-solid fa-pen"></i>
                   <b onClick={() => setClick(!click)} className="bold-text">
                     &nbsp;&nbsp;UPDATE PRODUCT
                   </b>
                 </button>
+              ) : (
+                <>
+                  <button className="addCart-btn">
+                    <i className="fa-solid fa-bag-shopping fa-lg" />
+                    <b onClick={addTocart} className="bold-text">
+                      &nbsp;ADD TO BAG
+                    </b>
+                  </button>
+                  <button className="wish-btn">
+                    <i className="fa-regular fa-heart fa-lg" />
+                    <b onClick={addToWishlist} className="bold-text">
+                      &nbsp;WISHLIST
+                    </b>
+                  </button>
+                </>
               )}
             </div>
           </div>
@@ -179,7 +184,9 @@ const SingleProduct = () => {
               </ul>
               <p>View Eligible products</p>
               <p>
-                <b className="bold-text">Up To Rs 500 Cashback on CRED pay transactions.</b>
+                <b className="bold-text">
+                  Up To Rs 500 Cashback on CRED pay transactions.
+                </b>
               </p>
               <ul>
                 <li>Min Spend Rs 1,000. Available only on Android Devices.</li>
@@ -205,7 +212,9 @@ const SingleProduct = () => {
             </p>
             <div>
               <b className="bold-text">Size and Fit</b>
-              <p className="prod-text">The model (height 6') is wearing a size M </p>
+              <p className="prod-text">
+                The model (height 6') is wearing a size M{" "}
+              </p>
             </div>
             <div>
               <b className="bold-text">Material &amp; Care</b>
@@ -381,7 +390,10 @@ const SingleProduct = () => {
                 Product Code: <b className="bold-text">11148764</b>
               </p>
               <p style={{ textTransform: "uppercase" }}>
-                Seller:&nbsp;<b className="bold-text">{proData?.pri} CLOTHING PRIVATE LIMITED</b>
+                Seller:&nbsp;
+                <b className="bold-text">
+                  {proData?.pri} CLOTHING PRIVATE LIMITED
+                </b>
               </p>
               <p>
                 <b className="bold-text">View Supplier Information</b>

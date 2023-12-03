@@ -50,7 +50,7 @@ export const addWishlist = async (req, res) => {
     await user.save();
     return res.status(200).json({ success: true, user: user });
   } catch (error) {
-    return res.status(500).json({ success:false, message: error });
+    return res.status(500).json({ success: false, message: error.message});
   }
 };
 
@@ -88,9 +88,9 @@ export const deleteCartProduct = async (req, res) => {
     const removeItem = cart.indexOf(productId);
     cart.splice(removeItem, 1);
     await user.save();
-    return res.status(200).json({ success: true});
+    return res.status(200).json({ success: true });
   } catch (error) {
-    return res.status(500).json({ success:false, message: error });
+    return res.status(500).json({ success: false, message: error });
   }
 };
 export const deleteWishlistProduct = async (req, res) => {
@@ -105,42 +105,41 @@ export const deleteWishlistProduct = async (req, res) => {
     const removeItem = wish.indexOf(productId);
     wish.splice(removeItem, 1);
     await user.save();
-    return res.status(200).json({ success: true});
+    return res.status(200).json({ success: true });
   } catch (error) {
-    return res.status(500).json({ success:false, message: error });
+    return res.status(500).json({ success: false, message: error });
   }
 };
 
-export const clearCart=async(req,res)=>{
-  try{
-    const {token } = req.body;
-    if (!token)
-      throw new Error("token is required");
+export const clearCart = async (req, res) => {
+  try {
+    const { token } = req.body;
+    if (!token) throw new Error("token is required");
     const decodedData = jwt.verify(token, process.env.JWT_SECRET);
     const userId = decodedData?.userId;
     const user = await UserModal.findById({ _id: userId });
-    user.cart=[];
-    await user.save()
-    return res.status(200).json({ success: true});
-  }catch(error){
-    return res.status(500).json({ success:false, message: error.message });  
+    user.cart = [];
+    await user.save();
+    return res.status(200).json({ success: true });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
   }
-}
+};
 
-export const MoveToCart=async(req,res)=>{
-  try{
-    const {productId,token } = req.body;
+export const MoveToCart = async (req, res) => {
+  try {
+    const { productId, token } = req.body;
     if (!token || !productId)
       throw new Error("Product Id or token is required");
     const decodedData = jwt.verify(token, process.env.JWT_SECRET);
     const userId = decodedData?.userId;
     const user = await UserModal.findById({ _id: userId });
-    const workIndex=user.wishlist.indexOf(productId)
-    user.wishlist.splice(workIndex,1)
-    user.cart.push(productId)
-    await user.save()
-    return res.status(200).json({ success: true});
-  }catch(error){
-    return res.status(500).json({ success:false, message: error.message });  
+    const workIndex = user.wishlist.indexOf(productId);
+    user.wishlist.splice(workIndex, 1);
+    user.cart.push(productId);
+    await user.save();
+    return res.status(200).json({ success: true });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
   }
-}
+};

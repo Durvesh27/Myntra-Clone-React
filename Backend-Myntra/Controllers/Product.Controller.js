@@ -2,18 +2,27 @@ import ProductModal from "../Modals/Product.Modal.js";
 import jwt from "jsonwebtoken";
 export const addProduct = async (req, res) => {
   try {
-    const { pri, sec, category, imgsrc, discount,price1,price2 } = req.body.addPro
-    const {token}=req.body
-    if (!pri || !sec || !imgsrc || !price1 || !price2 || !discount || !category) {
+    const { pri, sec, category, imgsrc, discount, price1, price2 } =
+      req.body.addPro;
+    const { token } = req.body;
+    if (
+      !pri ||
+      !sec ||
+      !imgsrc ||
+      !price1 ||
+      !price2 ||
+      !discount ||
+      !category
+    ) {
       return res
         .status(404)
-        .json({ success:false, message: "All Fields Mandatory" });
+        .json({ success: false, message: "All Fields Mandatory" });
     }
     const decodedData = jwt.verify(token, process.env.JWT_SECRET);
     if (!decodedData) {
       return res
         .status(404)
-        .json({ success:false, message: "Token not valid" });
+        .json({ success: false, message: "Token not valid" });
     }
     const userId = decodedData?.userId;
     const product = new ProductModal({
@@ -28,9 +37,9 @@ export const addProduct = async (req, res) => {
     });
     await product.save();
 
-    return res.status(200).json({ success:true,productData:product });
+    return res.status(200).json({ success: true, productData: product });
   } catch (error) {
-    res.status(500).json({success:false, message: error });
+    res.status(500).json({ success: false, message: error });
   }
 };
 
@@ -39,19 +48,17 @@ export const allProducts = async (req, res) => {
     const products = await ProductModal.find({
       isBlocked: false,
       isVerified: false,
-    })
+    });
     if (products.length) {
-      return res.status(200).json({ success:true, products: products });
+      return res.status(200).json({ success: true, products: products });
     }
     return res
       .status(404)
-      .json({ success:false, message: "No Products found" });
+      .json({ success: false, message: "No Products found" });
   } catch (error) {
-    return res.status(500).json({ success:false, message: error });
+    return res.status(500).json({ success: false, message: error });
   }
 };
-
-
 
 export const getYourProduct = async (req, res) => {
   try {
@@ -79,61 +86,60 @@ export const getYourProduct = async (req, res) => {
 
 export const SingleProduct = async (req, res) => {
   try {
-      const { userId } = req.body;
-      if (!userId) return res.status(404).json({ success: false, message: "Product id is mandtory.." })
+    const { userId } = req.body;
+    if (!userId)
+      return res
+        .status(404)
+        .json({ success: false, message: "Product id is mandtory.." });
 
-      const product = await ProductModal.findById(userId);
-      if (product) {
-          return res.status(200).json({ success: true, productData:product })
-      }
-      return res.status(404).json({ success: false, error: "Products details not found." })
-
+    const product = await ProductModal.findById(userId);
+    if (product) {
+      return res.status(200).json({ success: true, productData: product });
+    }
+    return res
+      .status(404)
+      .json({ success: false, error: "Products details not found." });
   } catch (error) {
-      return res.status(500).json({ success: false, error: error.message })
+    return res.status(500).json({ success: false, error: error.message });
   }
-}
+};
 
 export const updateYourProduct = async (req, res) => {
   try {
-    const { pri,
-    sec,
-    price1,
-    price2,
-    discount,
-    category,
-    imgsrc} = req.body.storeData;
-    const {productId,token}=req.body;
-    if (!token){
-      console.log("no token")
-      return res
-      .status(404)
-      .json({ success:false, message: "Token is required" });
-    }   
-    const decodedData = jwt.verify(token, process.env.JWT_SECRET);
-    if (!decodedData) {
-      console.log("invalid token")
+    const { pri, sec, price1, price2, discount, category, imgsrc } =
+      req.body.storeData;
+    const { productId, token } = req.body;
+    if (!token) {
+      console.log("no token");
       return res
         .status(404)
-        .json({ success:false, message: "Token not valid" });
+        .json({ success: false, message: "Token is required" });
+    }
+    const decodedData = jwt.verify(token, process.env.JWT_SECRET);
+    if (!decodedData) {
+      console.log("invalid token");
+      return res
+        .status(404)
+        .json({ success: false, message: "Token not valid" });
     }
     const userId = decodedData?.userId;
 
     const updatedProduct = await ProductModal.findOneAndUpdate(
       { _id: productId, userId: userId },
-      { pri,sec,price1,price2, category,discount, imgsrc },
+      { pri, sec, price1, price2, category, discount, imgsrc },
       { new: true }
     );
     if (updatedProduct) {
       return res
         .status(200)
-        .json({ success:true, productData: updatedProduct });
+        .json({ success: true, productData: updatedProduct });
     }
     return res.status(404).json({
-      success:false,
+      success: false,
       message: "You are trying to update product which is not yours..",
     });
   } catch (error) {
-    return res.status(500).json({ success:false, message: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -194,16 +200,16 @@ export const addComments = async (req, res) => {
   }
 };
 
-export const searchProducts=async (req,res)=>{
-try{
-const keyword=req.query.search? 
-{
-pri:{$regex:req.query.search,$options:"i"}
-}:{}
-const products=await ProductModal.find(keyword)
-return res.status(200).json({ success:true, products});
-}
-catch (error) {
-  return res.status(500).json({ success:false, error: error.message });
-}
-}
+export const searchProducts = async (req, res) => {
+  try {
+    const keyword = req.query.search
+      ? {
+          pri: { $regex: req.query.search, $options: "i" },
+        }
+      : {};
+    const products = await ProductModal.find(keyword);
+    return res.status(200).json({ success: true, products });
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error.message });
+  }
+};

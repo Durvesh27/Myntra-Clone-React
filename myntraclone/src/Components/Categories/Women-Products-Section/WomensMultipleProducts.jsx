@@ -3,51 +3,55 @@ import "./../../Categories/MultipleProduct.css";
 import star1 from "./../../Images/star.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
 import { useEffect } from "react";
 import { ColorRing } from "react-loader-spinner";
 import { useContext } from "react";
 import { AuthContext } from "../../../Context";
 import toast from "react-hot-toast";
+import api from "../../Api Config";
 const WomensMultipleProducts = () => {
   const [WomensData, setWomensData] = useState([]);
   const [loading, setLoading] = useState(false);
   const router = useNavigate();
   const [page, setPage] = useState(1);
-  const {productsUpdated}=useContext(AuthContext)
+  const { state,productsUpdated } = useContext(AuthContext);
 
   useEffect(() => {
     async function getProducts() {
-      const response = await axios.get("http://localhost:8001/all-products");
+      const response = await api.get("/all/all-products");
       if (response.data.success) {
         setWomensData(
-          response.data.products.filter(
-            (item) => item.category === "Womens Clothing"
-          ).slice(page-1, page + 4)
+          response.data.products
+            .filter((item) => item.category === "Womens Clothing")
+            .slice(page - 1, page + 4)
         );
         setLoading(true);
       }
     }
     getProducts();
-  }, [page,productsUpdated]);
+  }, [page, productsUpdated]);
 
-  useEffect(()=>{
-    if(WomensData.length==0){
-    setPage(1)
+  useEffect(() => {
+    if (WomensData.length == 0) {
+      setPage(1);
     }
-    },[WomensData])
+  }, [WomensData]);
 
-    const addToWishlist = async (proData) => {
-      const productId = proData._id;
-      const token = JSON.parse(localStorage.getItem("Token1"));
-      const { data } = await axios.post("http://localhost:8001/add-wishlist", {
+  const addToWishlist = async (proData) => {
+    const productId = proData._id;
+    const token = JSON.parse(localStorage.getItem("Token1"));
+    if (token) {
+      const { data } = await api.post("/buyer/add-wishlist", {
         productId,
         token,
       });
       if (data.success) {
         toast.success("Item added to Wishlist");
       }
-    };
+    } else {
+      toast("Please Login");
+    }
+  };
   return (
     <>
       {loading ? (
@@ -258,45 +262,52 @@ const WomensMultipleProducts = () => {
             </div>
 
             <div id="rightSection">
-              {WomensData && WomensData.map((WomensData) => (
-                <div className="main">
-                  <img
-                    src={WomensData?.imgsrc}
-                    alt=""
-                    onClick={() => router(`/single-product/${WomensData?._id}`)}
-                  />
-                  <h4>{WomensData?.pri}</h4>
-                  <p>{WomensData?.category}</p>
-                  <span className="box">
-                    <b>{WomensData?.rating}</b>
-                    <img src={star1} alt="" />
-                    <b>| 14.1k</b>
-                  </span>
-                  <span className="secText">
-                    <strong>₹ {WomensData?.price1} </strong>
-                    <span>
-                      MRP
-                      <del>₹ {WomensData?.price2}</del>
+              {WomensData &&
+                WomensData.map((WomensData) => (
+                  <div className="main">
+                    <img
+                      src={WomensData?.imgsrc}
+                      alt=""
+                      onClick={() =>
+                        router(`/single-product/${WomensData?._id}`)
+                      }
+                    />
+                    <h4>{WomensData?.pri}</h4>
+                    <p>{WomensData?.category}</p>
+                    <span className="box">
+                      <b>{WomensData?.rating}</b>
+                      <img src={star1} alt="" />
+                      <b>| 14.1k</b>
                     </span>
-                    <b>({WomensData?.discount}% OFF)</b>
-                  </span>
-                  <div className="container">
-                    <button onClick={()=>addToWishlist(WomensData)}>
-                      WISHLIST
-                      <i className="fa-regular fa-heart" />
-                    </button>
-                    <p>Sizes: Onesize</p>
                     <span className="secText">
-                      <strong>₹ {WomensData?.price1}</strong>
+                      <strong>₹ {WomensData?.price1} </strong>
                       <span>
                         MRP
-                        <del>₹ {WomensData?.price1}</del>
+                        <del>₹ {WomensData?.price2}</del>
                       </span>
                       <b>({WomensData?.discount}% OFF)</b>
                     </span>
+                    {
+                      state.user.role==="Buyer" &&
+                      <div className="container">
+                      <button onClick={() => addToWishlist(WomensData)}>
+                        WISHLIST
+                        <i className="fa-regular fa-heart" />
+                      </button>
+                      <p>Sizes: Onesize</p>
+                      <span className="secText">
+                        <strong>₹ {WomensData?.price1}</strong>
+                        <span>
+                          MRP
+                          <del>₹ {WomensData?.price1}</del>
+                        </span>
+                        <b>({WomensData?.discount}% OFF)</b>
+                      </span>
+                    </div>
+                    }
+
                   </div>
-                </div>
-              ))}
+                ))}
               <div className="downline" />
               <div className="bottomFlex">
                 {/* <p>Page 1 of 1831</p> */}
@@ -312,15 +323,15 @@ const WomensMultipleProducts = () => {
           <li>9</li>
           <li>10</li>
         </ul> */}
-                 <div className="lastButton">
-                  {
-                    page===1? 
-                  <button onClick={() => setPage(page + 5)}>NEXT </button>:
-                  <>
-                  <button onClick={() => setPage(page + 5)}>NEXT </button>
-                  <button onClick={() => setPage(page - 5)}>PREV </button>
-                  </>
-                  }
+                <div className="lastButton">
+                  {page === 1 ? (
+                    <button onClick={() => setPage(page + 5)}>NEXT </button>
+                  ) : (
+                    <>
+                      <button onClick={() => setPage(page + 5)}>NEXT </button>
+                      <button onClick={() => setPage(page - 5)}>PREV </button>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

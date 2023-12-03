@@ -4,11 +4,15 @@ import { useNavigate } from "react-router-dom";
 import "./Profile.css";
 import { AuthContext } from "../../Context";
 import { toast } from "react-hot-toast";
-import axios from "axios";
+import api from "../Api Config";
 
 const ProfileBox = ({ showProfile, setShowProfile }) => {
   const { state, login } = useContext(AuthContext);
-  const [userData, setUserData] = useState({name:"",email:"",password:""});
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
   const router = useNavigate();
 
   useEffect(() => {
@@ -21,19 +25,20 @@ const ProfileBox = ({ showProfile, setShowProfile }) => {
     setUserData({ ...userData, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit =async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const token=JSON.parse(localStorage.getItem("Token1"))
-    const { data } =await axios.post("http://localhost:8001/update-profile", {
-      userData,token
+    const token = JSON.parse(localStorage.getItem("Token1"));
+    const { data } = await api.post("/all/update-profile", {
+      userData,
+      token,
     });
     if (data.success) {
       login(data.updatedDetails);
       setUserData({});
       setShowProfile(!showProfile);
       toast.success("Profile updated");
-    }else{
-      toast.error(data.message)
+    } else {
+      toast.error(data.message);
     }
   };
 
@@ -41,11 +46,18 @@ const ProfileBox = ({ showProfile, setShowProfile }) => {
     <div>
       <div className="opacity"></div>
       <div className="profile-form">
-        <h2 style={{ textAlign: "center",margin:"15px 0",display:"flex",justifyContent:"flex-end"}}>
-        <span>Edit Profile</span>
-        <span
+        <h2
+          style={{
+            textAlign: "center",
+            margin: "15px 0",
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        >
+          <span>Edit Profile</span>
+          <span
             style={{ fontSize: "18px", marginLeft: "200px" }}
-            onClick={() =>setShowProfile(!showProfile)}
+            onClick={() => setShowProfile(!showProfile)}
           >
             X
           </span>

@@ -2,8 +2,8 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context";
 import { toast } from "react-hot-toast";
-import axios from "axios";
 import { useEffect } from "react";
+import api from "../Api Config";
 
 const Login = () => {
   const [userData, setUserData] = useState({
@@ -11,34 +11,34 @@ const Login = () => {
     password: "",
   });
   const router = useNavigate();
-  const{login,state}=useContext(AuthContext)
+  const { login, state } = useContext(AuthContext);
 
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit =async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (userData.email && userData.password) {
-        const response = await axios.post("http://localhost:8001/login", { userData });
-        if (response.data.success) {
-            setUserData({ email: "", password: "" })
-            router('/')
-            toast.success(response.data.message)
-            localStorage.setItem("Token1",JSON.stringify(response.data.token))
-            login(response.data.user)
-        } else {
-            toast.error(response.data.message)
-        }
+      const response = await api.post("/all/login", { userData });
+      if (response.data.success) {
+        setUserData({ email: "", password: "" });
+        router("/");
+        toast.success(response.data.message);
+        localStorage.setItem("Token1", JSON.stringify(response.data.token));
+        login(response.data.user);
+      } else {
+        toast.error(response.data.message);
+      }
     } else {
-        toast.error("All fields are mandtory.")
+      toast.error("All fields are mandtory.");
     }
   };
-  useEffect(()=>{
-    if(state?.user?.name){
-    router("/")
+  useEffect(() => {
+    if (state?.user?.name) {
+      router("/");
     }
-    },[state])
+  }, [state]);
   return (
     <div className="form-body">
       <div className="mainBox">
@@ -48,7 +48,7 @@ const Login = () => {
         />
         <div className="second">
           <div>
-            <b style={{fontSize:"1rem"}}>Login</b>
+            <b style={{ fontSize: "1rem" }}>Login</b>
           </div>
 
           <form onSubmit={handleSubmit}>
@@ -66,15 +66,22 @@ const Login = () => {
               name="password"
               value={userData.password}
             />
-            <p style={{ fontSize: "14px", margin: "20px 0" }} className="bold-text">
-              By continuing,i agree to the <b style={{ fontSize: "14px" }}>Terms of use &  </b> 
+            <p
+              style={{ fontSize: "14px", margin: "20px 0" }}
+              className="bold-text"
+            >
+              By continuing,i agree to the{" "}
+              <b style={{ fontSize: "14px" }}>Terms of use & </b>
               <b style={{ fontSize: "14px" }}>Privacy policy</b>
             </p>
             <input type="submit" value="LOGIN" className="submit-btn" />
           </form>
 
-          <p style={{ fontSize: "14px" }} >
-            New to Myntra? <b onClick={() => router("/register")} style={{ fontSize: "14px" }}>Sign-up</b>
+          <p style={{ fontSize: "14px" }}>
+            New to Myntra?{" "}
+            <b onClick={() => router("/register")} style={{ fontSize: "14px" }}>
+              Sign-up
+            </b>
           </p>
         </div>
       </div>

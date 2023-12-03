@@ -120,19 +120,19 @@ export const UpdateProfile = async (req, res) => {
     if (email) {
       user.email = email;
     }
-    const newHashedPassword= await bcrypt.hash(password,10)
+    const newHashedPassword = await bcrypt.hash(password, 10);
     if (password) {
-      user.password =newHashedPassword;
+      user.password = newHashedPassword;
     }
-    const updatedObj={
+    const updatedObj = {
       name: user?.name,
       email: user?.email,
       role: user?.role,
       cartCount: user.cart.length,
       _id: user?._id,
-    }
+    };
     await user.save();
-    return res.json({ success: true,updatedDetails:updatedObj });
+    return res.json({ success: true, updatedDetails: updatedObj });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
   }

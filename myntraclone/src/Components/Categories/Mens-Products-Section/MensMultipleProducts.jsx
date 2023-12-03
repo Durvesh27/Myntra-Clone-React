@@ -2,54 +2,58 @@ import React, { useEffect } from "react";
 import "./../../Categories/MultipleProduct.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
 import { ColorRing } from "react-loader-spinner";
 import { useContext } from "react";
 import { AuthContext } from "../../../Context";
 import star1 from "./../../Images/star.png";
 import toast from "react-hot-toast";
+import api from "../../Api Config";
 
 const MensMultipleProducts = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const router = useNavigate();
-  const {productsUpdated}=useContext(AuthContext)
+  const { state, productsUpdated } = useContext(AuthContext);
 
   useEffect(() => {
     async function getProducts() {
-      const response = await axios.get("http://localhost:8001/all-products");
+      const response = await api.get("/all/all-products");
       if (response.data.success) {
         setProducts(
           response.data.products
             .filter((item) => item.category === "Men Clothing")
-            .slice(page-1, page + 4)
+            .slice(page - 1, page + 4)
         );
         setLoading(true);
       }
     }
     getProducts();
-  },[page,productsUpdated]);
+  }, [page, productsUpdated]);
 
-  useEffect(()=>{
-  if(products.length==0){
-  setPage(1)
-  }
-  },[products])
+  useEffect(() => {
+    if (products.length == 0) {
+      setPage(1);
+    }
+  }, [products]);
 
   const addToWishlist = async (proData) => {
     const productId = proData._id;
     const token = JSON.parse(localStorage.getItem("Token1"));
-    const { data } = await axios.post("http://localhost:8001/add-wishlist", {
-      productId,
-      token,
-    });
-    if (data.success) {
-      toast.success("Item added to Wishlist");
+    if (token) {
+      const { data } = await api.post("/buyer/add-wishlist", {
+        productId,
+        token,
+      });
+      if (data.success) {
+        toast.success("Item added to Wishlist");
+      }
+    } else {
+      toast("Please Login");
     }
   };
 
-  return(
+  return (
     <>
       {loading ? (
         <div>
@@ -255,33 +259,20 @@ const MensMultipleProducts = () => {
               </div>
             </div>
             <div id="rightSection">
-              {products && products.map((pro) => (
-                <div className="main">
-                  <img
-                    src={pro?.imgsrc}
-                    onClick={() => router(`/single-product/${pro?._id}`)}
-                  />
-                  <h4>{pro?.pri}</h4>
-                  <p>{pro?.category}</p>
-                  <span className="box">
-                    <b>{pro?.rating}</b>
-                    <img src={star1} alt />
-                    <b>| 19.3k</b>
-                  </span>
-                  <span className="secText">
-                    <strong>₹ {pro?.price1} </strong>
-                    <span>
-                      MRP
-                      <del>₹ {pro?.price2}</del>
+              {products &&
+                products.map((pro) => (
+                  <div className="main">
+                    <img
+                      src={pro?.imgsrc}
+                      onClick={() => router(`/single-product/${pro?._id}`)}
+                    />
+                    <h4>{pro?.pri}</h4>
+                    <p>{pro?.category}</p>
+                    <span className="box">
+                      <b>{pro?.rating}</b>
+                      <img src={star1} alt />
+                      <b>| 19.3k</b>
                     </span>
-                    <b>({pro?.discount}% OFF)</b>
-                  </span>
-                  <div className="container">
-                    <button onClick={()=>addToWishlist(pro)}>
-                      WISHLIST
-                      <i className="fa-regular fa-heart" />
-                    </button>
-                    <p>Sizes: Multiple Sizes</p>
                     <span className="secText">
                       <strong>₹ {pro?.price1} </strong>
                       <span>
@@ -290,9 +281,25 @@ const MensMultipleProducts = () => {
                       </span>
                       <b>({pro?.discount}% OFF)</b>
                     </span>
+                    {state.user.role === "Buyer" && (
+                      <div className="container">
+                        <button onClick={() => addToWishlist(pro)}>
+                          WISHLIST
+                          <i className="fa-regular fa-heart" />
+                        </button>
+                        <p>Sizes: Multiple Sizes</p>
+                        <span className="secText">
+                          <strong>₹ {pro?.price1} </strong>
+                          <span>
+                            MRP
+                            <del>₹ {pro?.price2}</del>
+                          </span>
+                          <b>({pro?.discount}% OFF)</b>
+                        </span>
+                      </div>
+                    )}
                   </div>
-                </div>
-              ))}
+                ))}
               <div className="downline" />
               <div className="bottomFlex">
                 {/* <p>Page 1 of 1831</p> */}
@@ -309,14 +316,14 @@ const MensMultipleProducts = () => {
               <li>10</li>
             </ul> */}
                 <div className="lastButton">
-                  {
-                    page===1? 
-                  <button onClick={() => setPage(page + 5)}>NEXT </button>:
-                  <>
-                  <button onClick={() => setPage(page + 5)}>NEXT </button>
-                  <button onClick={() => setPage(page - 5)}>PREV </button>
-                  </>
-                  }
+                  {page === 1 ? (
+                    <button onClick={() => setPage(page + 5)}>NEXT </button>
+                  ) : (
+                    <>
+                      <button onClick={() => setPage(page + 5)}>NEXT </button>
+                      <button onClick={() => setPage(page - 5)}>PREV </button>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

@@ -3,10 +3,10 @@ import "./Form.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import axios from 'axios'
 import { useContext } from "react";
 import { AuthContext } from "../../Context";
 import { useEffect } from "react";
+import api from "../Api Config";
 const Register = () => {
   const router = useNavigate();
   const [userData, setUserData] = useState({
@@ -14,14 +14,14 @@ const Register = () => {
     email: "",
     password: "",
     confirmedPassword: "",
-    role:"Buyer"
+    role: "Buyer",
   });
-  const{state}=useContext(AuthContext)
+  const { state } = useContext(AuthContext);
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (
       userData.name &&
@@ -31,37 +31,36 @@ const Register = () => {
       userData.confirmedPassword
     ) {
       if (userData.password === userData.confirmedPassword) {
-      const response=await axios.post("http://localhost:8001/register",{userData})
-      if(response.data.success){
-        setUserData({
-          name: "",
-          email: "",
-          role:"Buyer",
-          password: "",
-          confirmedPassword: "",
-        });
-        toast.success(response.data.message);
-        router("/login");
-      }else {
-        toast.error(response.data.message);
-      }
-      }
-      else {
+        const response = await api.post("/all/register", { userData });
+        if (response.data.success) {
+          setUserData({
+            name: "",
+            email: "",
+            role: "Buyer",
+            password: "",
+            confirmedPassword: "",
+          });
+          toast.success(response.data.message);
+          router("/login");
+        } else {
+          toast.error(response.data.message);
+        }
+      } else {
         toast.error("Password & Confirm Password not matched");
       }
-    }else{
-      toast.error("All Fields are Compulsory")
+    } else {
+      toast.error("All Fields are Compulsory");
     }
   };
 
-  function selectRole(e){
-  setUserData({...userData,role:e.target.value})
+  function selectRole(e) {
+    setUserData({ ...userData, role: e.target.value });
   }
-  useEffect(()=>{
-    if(state?.user?.name){
-    router("/")
+  useEffect(() => {
+    if (state?.user?.name) {
+      router("/");
     }
-    },[state])
+  }, [state]);
   return (
     <div className="form-body">
       <div className="mainBox">
@@ -71,7 +70,7 @@ const Register = () => {
         />
         <div className="second">
           <div>
-            <b style={{fontSize:"1rem"}}>Sign-up</b>
+            <b style={{ fontSize: "1rem" }}>Sign-up</b>
           </div>
 
           <form onSubmit={handleSubmit}>
@@ -89,9 +88,13 @@ const Register = () => {
               placeholder="Enter Email Address"
               onChange={handleChange}
             />
-            <select onChange={selectRole} value={userData.role} className="select-input">
-              <option >Buyer</option>
-              <option >Seller</option>
+            <select
+              onChange={selectRole}
+              value={userData.role}
+              className="select-input"
+            >
+              <option>Buyer</option>
+              <option>Seller</option>
             </select>
             <input
               type="password"
@@ -108,7 +111,8 @@ const Register = () => {
               onChange={handleChange}
             />
             <p style={{ fontSize: "14px" }}>
-              By continuing,i agree to the <b style={{ fontSize: "14px" }}>Terms of use</b> &amp;{" "}
+              By continuing,i agree to the{" "}
+              <b style={{ fontSize: "14px" }}>Terms of use</b> &amp;{" "}
               <b style={{ fontSize: "14px" }}>Privacy policy</b>{" "}
             </p>
             <input type="submit" value="CONTINUE" className="submit-btn" />
@@ -116,7 +120,9 @@ const Register = () => {
 
           <p style={{ fontSize: "14px" }}>
             Already have an account{" "}
-            <b onClick={() => router("/login")} style={{ fontSize: "14px" }}>LOGIN</b>{" "}
+            <b onClick={() => router("/login")} style={{ fontSize: "14px" }}>
+              LOGIN
+            </b>{" "}
           </p>
         </div>
       </div>

@@ -14,28 +14,51 @@ import SingleProduct from "./Components/Categories/SingleProduct";
 import Profile from "./Components/Basic/Profile";
 import Footer from "./Components/Basic/Footer";
 
-
 function App() {
   return (
     <>
-<Navbar/>
-<Routes>
-  <Route exact path="/" element={<Home/>}/>
-  <Route exact path="/mens-multiple-products" element={<MensMultipleProducts />}/>
-  <Route exact path="/womens-multiple-products" element={<WomensMultipleProducts/>}/>
-  <Route exact path="/kids-multiple-products" element={<KidsMultipleProducts/>}/>
-  <Route exact path="/home-multiple-products" element={<HomeMultipleProducts/>}/>
-  <Route exact path="/beauty-multiple-products" element={<BeautyMultipleProducts/>}/>
-  <Route exact path="/register" element={<Register/>}/>
-  <Route exact path="/login" element={<Login/>}/>
-  <Route exact path="/profile" element={<Profile/>}/>
-  <Route exact path="/cart" element={<Cart />}/>
-  <Route exact path="/wishlist" element={<Wishlist/>}/>
-  <Route exact path="/single-product/:userId" element={<SingleProduct/>}/>
-</Routes>
-<Footer/>
-</>
-  )
+      <Navbar />
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route
+          exact
+          path="/mens-multiple-products"
+          element={<MensMultipleProducts />}
+        />
+        <Route
+          exact
+          path="/womens-multiple-products"
+          element={<WomensMultipleProducts />}
+        />
+        <Route
+          exact
+          path="/kids-multiple-products"
+          element={<KidsMultipleProducts />}
+        />
+        <Route
+          exact
+          path="/home-multiple-products"
+          element={<HomeMultipleProducts />}
+        />
+        <Route
+          exact
+          path="/beauty-multiple-products"
+          element={<BeautyMultipleProducts />}
+        />
+        <Route exact path="/register" element={<Register />} />
+        <Route exact path="/login" element={<Login />} />
+        <Route exact path="/profile" element={<Profile />} />
+        <Route exact path="/cart" element={<Cart />} />
+        <Route exact path="/wishlist" element={<Wishlist />} />
+        <Route
+          exact
+          path="/single-product/:userId"
+          element={<SingleProduct />}
+        />
+      </Routes>
+      <Footer />
+    </>
+  );
 }
 
 export default App;

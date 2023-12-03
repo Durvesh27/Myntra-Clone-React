@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { AuthContext } from "../../Context";
-import axios from "axios";
+import api from "../Api Config";
 
 const UpdateProduct = ({ id, setProData, click, setClick }) => {
   const [storeData, setStoreData] = useState({
@@ -26,15 +26,16 @@ const UpdateProduct = ({ id, setProData, click, setClick }) => {
     const token = JSON.parse(localStorage.getItem("Token1"));
     e.preventDefault();
     try {
-      console.log("proId",id,"userId",state?.user?._id)
-      const { data } = await axios.patch(
-        "http://localhost:8001/update-product",
-        { storeData, productId: id, token }
-      );
-      if(data.success){
-      toast.success("Product Updated");
-      setClick(!click)
-      setProData(data.productData)
+      console.log("proId", id, "userId", state?.user?._id);
+      const { data } = await api.patch("/seller/update-product", {
+        storeData,
+        productId: id,
+        token,
+      });
+      if (data.success) {
+        toast.success("Product Updated");
+        setClick(!click);
+        setProData(data.productData);
       }
     } catch (error) {
       console.log(error.message);
@@ -43,33 +44,10 @@ const UpdateProduct = ({ id, setProData, click, setClick }) => {
 
   return (
     <div>
-      <div
-      className="opacity"
-        // style={{
-        //   background: "rgba(0,0,0,0.5)",
-        //   position: "fixed",
-        //   top: 0,
-        //   left: 0,
-        //   width: "100%",
-        //   height: "100%",
-        //   zIndex: 99,
-        // }}
-      ></div>
-      <div
-        // style={{
-        //   width: "30%",
-        //   lineHeight: "30px",
-        //   position: "fixed",
-        //   top: "130px",
-        //   left: "510px",
-        //   padding: "20px",
-        //   zIndex: 999,
-        //   background: "white",
-        // }}
-        className="add-product"
-      >
+      <div className="opacity"></div>
+      <div className="add-product">
         <h2 className="add-title">
-          <span style={{fontSize:"18px"}}>Update Product</span>
+          <span style={{ fontSize: "18px" }}>Update Product</span>
           <span
             style={{ fontSize: "18px", marginLeft: "250px" }}
             onClick={() => setClick(!click)}
