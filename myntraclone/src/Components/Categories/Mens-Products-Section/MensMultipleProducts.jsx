@@ -281,7 +281,7 @@ const MensMultipleProducts = () => {
                       </span>
                       <b>({pro?.discount}% OFF)</b>
                     </span>
-                    {state.user.role === "Buyer" && (
+                    {state.user && state.user.role === "Buyer" && (
                       <div className="container">
                         <button onClick={() => addToWishlist(pro)}>
                           WISHLIST

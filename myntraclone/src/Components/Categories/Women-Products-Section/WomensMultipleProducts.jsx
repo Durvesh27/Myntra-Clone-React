@@ -14,7 +14,7 @@ const WomensMultipleProducts = () => {
   const [loading, setLoading] = useState(false);
   const router = useNavigate();
   const [page, setPage] = useState(1);
-  const { state,productsUpdated } = useContext(AuthContext);
+  const { state, productsUpdated } = useContext(AuthContext);
 
   useEffect(() => {
     async function getProducts() {
@@ -287,25 +287,23 @@ const WomensMultipleProducts = () => {
                       </span>
                       <b>({WomensData?.discount}% OFF)</b>
                     </span>
-                    {
-                      state.user.role==="Buyer" &&
+                    {state.user && state.user.role === "Buyer" && (
                       <div className="container">
-                      <button onClick={() => addToWishlist(WomensData)}>
-                        WISHLIST
-                        <i className="fa-regular fa-heart" />
-                      </button>
-                      <p>Sizes: Onesize</p>
-                      <span className="secText">
-                        <strong>₹ {WomensData?.price1}</strong>
-                        <span>
-                          MRP
-                          <del>₹ {WomensData?.price1}</del>
+                        <button onClick={() => addToWishlist(WomensData)}>
+                          WISHLIST
+                          <i className="fa-regular fa-heart" />
+                        </button>
+                        <p>Sizes: Onesize</p>
+                        <span className="secText">
+                          <strong>₹ {WomensData?.price1}</strong>
+                          <span>
+                            MRP
+                            <del>₹ {WomensData?.price1}</del>
+                          </span>
+                          <b>({WomensData?.discount}% OFF)</b>
                         </span>
-                        <b>({WomensData?.discount}% OFF)</b>
-                      </span>
-                    </div>
-                    }
-
+                      </div>
+                    )}
                   </div>
                 ))}
               <div className="downline" />
