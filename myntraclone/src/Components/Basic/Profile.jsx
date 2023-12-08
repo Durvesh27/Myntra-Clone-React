@@ -3,27 +3,15 @@ import "./Profile.css";
 import ProfileBox from "./ProfileBox";
 import { useState } from "react";
 import { AuthContext } from "../../Context";
-import { Triangle } from "react-loader-spinner";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [showProfile, setShowProfile] = useState(false);
   const { state, logout } = useContext(AuthContext);
-  const [loading, setLoading] = useState(false);
   const router = useNavigate();
-
-  useEffect(() => {
-    if (state.user) {
-      setLoading(true);
-    } else {
-      router("/");
-    }
-  }, [state]);
 
   return (
     <div>
-      {loading ? (
         <div className="profile-page">
           <div className="profile">
             <h3>Account</h3>
@@ -86,16 +74,28 @@ const Profile = () => {
                   <li>Alternate Mobile</li>
                   <li>Hint Name</li>
                 </ul>
-                <ul className="ls-none fl-right lh-47">
+                {
+                  state?.user?
+                <ul className="ls-none fl-right lh-47">  
                   <li>{state?.user?.name}</li>
-                  <li>8369041343</li>
+                  <li>- Not added -</li>
                   <li>{state?.user?.email}</li>
-                  <li>MALE</li>
-                  <li>06/10/1998</li>
                   <li>- Not added -</li>
                   <li>- Not added -</li>
                   <li>- Not added -</li>
-                </ul>
+                  <li>- Not added -</li>
+                  <li>- Not added -</li>
+                </ul>:
+                <ul className="ls-none fl-right lh-47">  
+                  <li>-</li>
+                  <li>-</li>
+                  <li>-</li>
+                  <li>-</li>
+                  <li>-</li>
+                  <li>-</li>
+                  <li>-</li>
+                  <li>-</li>
+                </ul>}
               </div>
             </div>
             {state?.user ? (
@@ -109,27 +109,6 @@ const Profile = () => {
             )}
           </div>
         </div>
-      ) : (
-        <div
-          style={{
-            height: "80vh",
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Triangle
-            height="60"
-            width="60"
-            color="#4fa94d"
-            ariaLabel="triangle-loading"
-            wrapperStyle={{}}
-            wrapperClassName=""
-            visible={true}
-          />
-        </div>
-      )}
       {showProfile && (
         <ProfileBox showProfile={showProfile} setShowProfile={setShowProfile} />
       )}

@@ -8,17 +8,19 @@ import { useContext } from "react";
 import { AuthContext } from "../../Context";
 import { toast } from "react-hot-toast";
 import api from "../Api Config";
+import { Triangle } from "react-loader-spinner";
 const SingleProduct = () => {
   const { userId } = useParams();
   const [proData, setProData] = useState();
   const [click, setClick] = useState(false);
   const { state, count, setCount } = useContext(AuthContext);
-
+  const [loading,setLoading]=useState(false)
   useEffect(() => {
     async function viewProduct() {
       const { data } = await api.post("/all/single-product", { userId });
       if (data.success) {
         setProData(data.productData);
+        setLoading(!loading)
       }
     }
     viewProduct();
@@ -58,6 +60,9 @@ const SingleProduct = () => {
   };
 
   return (
+    <>
+    {
+      loading ? 
     <div>
       <div id="text">
         <p className="bold-text">
@@ -410,7 +415,28 @@ const SingleProduct = () => {
           setClick={setClick}
         />
       )}
-    </div>
+    </div>:
+    <div
+    style={{
+      height: "80vh",
+      width: "100%",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    }}
+  >
+    <Triangle
+      height="60"
+      width="60"
+      color="#4fa94d"
+      ariaLabel="triangle-loading"
+      wrapperStyle={{}}
+      wrapperClassName=""
+      visible={true}
+    />
+  </div>
+  }
+    </>
   );
 };
 

@@ -1,24 +1,25 @@
 .wishlist {
   width: 100%;
-  height: 800px;
+  /* height: 800px; */
 }
 
 .wishlist-items {
   display: flex;
+  flex-wrap: wrap;
 }
 .wishlist .first {
   font-size: 18px;
   margin-top: 50px;
   margin-bottom: 30px;
-  margin-left: 65px;
+  margin-left: 50px;
 }
 
 .wishlist-item {
-  margin-left: 65px;
+  margin-left: 50px;
   border: 1px solid rgb(202, 200, 200);
-  width: 230px;
+  width: 16%;
   position: relative;
-  /* display: inline; */
+  margin-bottom: 30px;
 }
 .wishlist-item img {
   width: 100%;
@@ -29,6 +30,10 @@
   margin-top: 10px;
   margin-bottom: 15px;
   color: #282c3f;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 0 10px;
 }
 .secText {
   margin-left: 28px;
@@ -70,4 +75,58 @@
   top: 10px;
   right: 10px;
   z-index: 1;
+}
+
+/* Media */
+@media screen and (max-width:1024px){
+  .wishlist-item {
+    margin-left: 40px;
+    width: 20%;
+  }
+}
+@media screen and (max-width:1024px){
+  .wishlist-item {
+    margin-left: 40px;
+    width: 26%;
+  }
+  .wishlist-item img {
+    height: 250px;
+}
+.secText {
+  margin-left: 18px;
+  margin-bottom: 15px;
+}
+.item-name {
+  margin-bottom: 10px;
+}
+}
+@media screen and (max-width:550px){
+  .wishlist-item {
+    margin-left: 40px;
+    width: 38%;
+  }
+  .wishlist-item img {
+    height: 235px;
+}
+}
+@media screen and (max-width:450px){
+  .wishlist-items {
+    justify-content: space-between
+  }
+  .wishlist-item {
+    margin-left: 0;
+    width: 48%;
+  }
+.wishlist .first {
+  font-size: 16px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  margin-left: 15px;
+}
+.wish-bold{
+  font-size: 15px;
+}
+.secText {
+  margin-left: 10px;
+}
 }

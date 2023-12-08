@@ -8,7 +8,7 @@ import { AuthContext } from "../../Context";
 import { useNavigate } from "react-router-dom";
 import api from "../Api Config";
 const Wishlist = () => {
-  const{state}=useContext(AuthContext)
+  const { state } = useContext(AuthContext);
   const [wishlistProducts, setWishlistProducts] = useState([]);
   const [updatedData, setUpdatedData] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -60,17 +60,17 @@ const Wishlist = () => {
       toast.success("Item moved to cart");
     }
   };
-  const goToShopping=()=>{
-    if(token){
-      router("/mens-multiple-products")
-    }else{
-      toast("Please Login")
+  const goToShopping = () => {
+    if (token) {
+      router("/mens-multiple-products");
+    } else {
+      toast("Please Login");
     }
-  }
+  };
   return (
     <>
       {loading ? (
-        wishlistProducts?.length === 0 || !state.user? (
+        wishlistProducts?.length === 0 || !state.user ? (
           <div className="empty-cart">
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5OAXIaKeTYv80C8NF6o1tZMVw09hVTEdxHw&usqp=CAU"
@@ -92,7 +92,8 @@ const Wishlist = () => {
         ) : (
           <div className="wishlist">
             <p className="first">
-              <b>My Wishlist</b> {wishlistProducts?.length} items
+              <b className="wish-bold">My Wishlist</b>{" "}
+              {wishlistProducts?.length} items
             </p>
             <div className="wishlist-items" key={wishlistProducts?._id}>
               {wishlistProducts?.map((item) => (

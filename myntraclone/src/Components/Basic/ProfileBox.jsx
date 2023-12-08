@@ -1,25 +1,17 @@
 import React, { useContext, useEffect } from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "./Profile.css";
 import { AuthContext } from "../../Context";
 import { toast } from "react-hot-toast";
 import api from "../Api Config";
 
 const ProfileBox = ({ showProfile, setShowProfile }) => {
-  const { state, login } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
   const [userData, setUserData] = useState({
     name: "",
     email: "",
     password: "",
   });
-  const router = useNavigate();
-
-  useEffect(() => {
-    if (!state.user) {
-      router("/");
-    }
-  }, []);
 
   const handleChange = (event) => {
     setUserData({ ...userData, [event.target.name]: event.target.value });
