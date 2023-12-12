@@ -8,7 +8,7 @@ Myntra E-Commerce Clone is an Online Shopping site for Buying and Selling variou
 
 ## Tech Stack
 
-**Client:** React
+**Client:** React JS
 
 **Server:** Node, Express
 
